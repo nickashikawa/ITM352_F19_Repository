@@ -24,25 +24,3 @@ body{
     width: 950px;
     background-color: black;
 }
-
-img{
-    float: left;
-    margin-right: 10px;
-}
-
-.left{
-float: left;
-width: 300px;
-padding: 1em;
-}
-.right{
-    float: right;
-    width: 300px;
-    padding: 1em;
-}
-.center{
-    margin-left: 300px;
-    margin-right: 300px; 
-    padding: 1em;
-}
-
