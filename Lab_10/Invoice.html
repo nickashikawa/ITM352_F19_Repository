@@ -6,11 +6,14 @@ This creates and display a sales invoice from product sales data
 //Product data
 
  // Product 1
-     var item1 = 'Gillette Sensor 3 Razor';
-     var quantity1 = 2;
-     var price1 = 1.23;
+     
+     // product1 object
+     var product1 = {item_name: 'Gillette Sensor 3 Razor', item_quantity: 2, item_price: 1.23};
 
-      // Product 2
+      product1.item_quantity = 0;
+      product1['SKU#'] = 1234;
+
+      // Product 2 
      var item2 = 'Barbasol Shaving Cream';
      var quantity2 = 1;
      var price2 = 2.64;
@@ -31,7 +34,7 @@ This creates and display a sales invoice from product sales data
      var price5 = 1.89;
 
      // Compute extended prices
-     var extended_price1 = quantity1*price1;
+     var extended_price1 = product1.item_quantity * product1.item_price;
      var extended_price2 = quantity2*price2;
      var extended_price3 = quantity3*price3;
      var extended_price4 = quantity4*price4;
@@ -69,9 +72,9 @@ This creates and display a sales invoice from product sales data
               // product row 1
               document.write(`
           <tr>
-            <td width="43%">${item1}</td>
-            <td align="center" width="11%">${quantity1}</td>
-            <td width="13%">\$${price1}</td>
+            <td width="43%">${product1.item_name}</td>
+            <td align="center" width="11%">${product1.item_quantity}</td>
+            <td width="13%">\$${product1.item_price}</td>
             <td width="54%">\$${extended_price1}2.46</td>
           </tr>
           `);
