@@ -6,7 +6,7 @@ parts = attributes.split(theSeparator);
   // parts = ['Nick',20,20.5,-19.5];
 
 // for(i=0; i < parts.length; i++) {
-    parts.forEach(fucntion (item,index) {
+    parts.forEach(function (item,index) {
         console.log( (typeof item == 'string' && item.length > 0)?true:false )});
     
    
