@@ -4,7 +4,6 @@
             price1 = 1200.00,
             image1 = "",
         };
-        products.push(products1);
 
         //Products 2
         var products2 = {
@@ -12,15 +11,13 @@
             price2 = 900.00,
             image2 = "",
         };
-        products.push(products2);
-
+  
         //Products 3
         var products3 = {
             brand3 = "Windows Dell",
             price3 = 1000.00,
             image3 = "",
         };
-        products.push(products3);
 
         //Products 4
         var products4 = {
@@ -28,4 +25,7 @@
             price4 = 950.00,
             image4 = "",
         };
-        products.push(products4);
+        
+        if(typeof modules ! = 'undefined') {
+            exports.products=products;
+        }
