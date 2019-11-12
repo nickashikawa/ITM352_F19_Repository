@@ -1,3 +1,6 @@
+var data = require('./public/product_data.js');
+var products = data.products;
+
 var express = require('express');
 var myParser = require("body-parser");
 
