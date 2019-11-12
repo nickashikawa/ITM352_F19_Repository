@@ -1,5 +1,6 @@
 var data = require('./public/product_data.js');
 var products = data.products;
+var fs = require('fs');
 
 var express = require('express');
 var myParser = require("body-parser");
@@ -11,13 +12,13 @@ app.all('*', function (request, response, next) {
 });
 
 app.use(myParser.urlencoded({ extended: true }));
-app.post("/process_form", function(request, response) {
-    let POST = request.body;
+app.post(process_quantity_form(request.body, response)); {
+    process_quantity_form (POST, response)
     if (typeof POST['quantity_textbox'] != 'undefined'){
         displayPurchase(response);
         
     }
-});
+};
 
 app.use(express.static('./public'));
 app.listen(8080, () => console.log(`listening on port 8080`));
