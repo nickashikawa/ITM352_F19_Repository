@@ -1,5 +1,5 @@
-var express = require('express');
-var myParser = require("body-parser");
+import express, { static } from 'express';
+import { urlencoded } from "body-parser";
 
 var app = express();
 app.all('*', function (request, response, next) {
@@ -7,7 +7,7 @@ app.all('*', function (request, response, next) {
     next();
 });
 
-app.use(myParser.urlencoded({ extended: true }));
+app.use(urlencoded({ extended: true }));
 app.post("/process_form", function(request, response) {
     let POST = request.body;
     if (typeof POST['quantity_textbox'] != 'undefined'){
@@ -16,7 +16,7 @@ app.post("/process_form", function(request, response) {
     }
 });
 
-app.use(express.static('./public'));
+app.use(static('./public'));
 app.listen(8080, () => console.log(`listening on port 8080`));
 
 function isNonNegInt(q, returnErrors = false) {
