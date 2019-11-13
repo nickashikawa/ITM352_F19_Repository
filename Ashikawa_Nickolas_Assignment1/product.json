@@ -24,6 +24,8 @@
             "Price" : "950.00",
             "Image" : ''
         }
+    ]
+    
          if(typeof modules ! = 'undefined') {
         exports.products=products;
-    ]
+    
