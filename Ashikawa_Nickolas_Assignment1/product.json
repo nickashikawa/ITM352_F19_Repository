@@ -1,31 +1,29 @@
-        //Products 1
-        var products1 = {
-            brand1 = "Apple Macbook",
-            price1 = 1200.00,
-            image1 = "",
-        };
+        [
+            {
+            "Model" : "Apple Macbook",
+            "Price" : "1200.00",
+            "Image" : ''
+        },
 
-        //Products 2
-        var products2 = {
-            brand2 = "Windows Surface Pro",
-            price2 = 900.00,
-            image2 = "",
-        };
+        {
+            "Model" : "Windows Surface Pro",
+            "Price" : "900.00",
+            "Image" : ''
+        },
   
-        //Products 3
-        var products3 = {
-            brand3 = "Windows Dell",
-            price3 = 1000.00,
-            image3 = "",
-        };
-
-        //Products 4
-        var products4 = {
-            brand4 = "Windows Surface Laptop",
-            price4 = 950.00,
-            image4 = "",
-        };
         
-        if(typeof modules ! = 'undefined') {
-            exports.products=products;
+        {
+            "Model" : "Windows Dell",
+            "Price" : "1000.00",
+            "Image" : ''
+        },
+
+        
+        {
+            "Brand" : "Windows Surface Laptop",
+            "Price" : "950.00",
+            "Image" : ''
         }
+         if(typeof modules ! = 'undefined') {
+        exports.products=products;
+    ]
