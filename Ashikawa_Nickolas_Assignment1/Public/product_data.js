@@ -4,7 +4,7 @@ var products =
             products1 = {
             "brand1" : "Apple Macbook",
             "price1" : 1200.00,
-            "image1" : "./Apple_Macbook.jpeg",
+            "image1" : "/Users/nickolasashikawa/Documents/GitHub/ITM352_F19_Repository/Ashikawa_Nickolas_Assignment1/Public/images/Apple_Macbook.jpeg",
         },
 
         //Products 2

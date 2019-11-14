@@ -4,7 +4,7 @@
 html {
   
     font-family: 'Raleway', sans-serif;
-    background-color: white;
+    background-color: silver;
     font-size: 10px;
     
   }
@@ -19,7 +19,7 @@ html {
   
   h1, h2 {
     
-    font-family: 'Cherry Swash', cursive;
+    font-family: 'Bebas Neue', regular;
     margin: 0;
     
     text-align: center;
@@ -58,23 +58,23 @@ html {
   }
   
   header {
-    border: 5px solid black;
+    border: 5px solid tan;
     border-bottom: 0;
   }
   
   aside {
-    border-right: 5px solid black;
+    border-right: 5px solid tan;
   }
   
   
   body > div {
-    border: 5px solid black;
+    border: 5px solid tan;
     display: flex;
   }
   
   
   footer {
-    border: 5px solid black;
+    border: 5px solid tan;
     border-top: 0;
   }
   
@@ -119,20 +119,20 @@ html {
   section {
     width: 45%;
     margin: 5px;
-    background-color: black;
+    background-color: grey;
     position: relative;
     height: 215px;
   }
   
   section p {
-    color: yellow;
-    background: black;
+    color: tan;
+    background: grey;
     width: 50px;
     height: 50px;
     line-height: 50px;
     text-align: center;
     border-radius: 50%;
-    box-shadow: 2px 2px 1px yellow;
+    box-shadow: 2px 2px 1px tan;
     position: absolute;
     right: 10px;
     bottom: -6px;
