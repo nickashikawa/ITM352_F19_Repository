@@ -1,4 +1,4 @@
-<script src="./product_data.js" type="text/javascript"> //uses get request for the product list</script> 
+<script src="./product_list.js" type="text/javascript"> //uses get request for the product list</script> 
 <script>
   //referenced from assignment 1 examples
         let params = (new URL(document.location)).searchParams;
@@ -24,7 +24,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <title>Document</title>
-      <link href="invoice_style.css" rel="stylesheet">
+      <link href="invoice-style.css" rel="stylesheet">
     </head>
     <body>
         <table border="1">
@@ -36,45 +36,22 @@
                 <th style="text-align: center;" width="54%">extended price</th>
               </tr>
               <script>
-                      // product row 1
-                      document.write(`
-                  <tr>
-                    <td width="43%">${item1}</td>
-                    <td align="center" width="11%">${quantity1}</td>
-                    <td width="13%">\$${price1}</td>
-                    <td width="54%">\$${extended_price1}</td>
-                  </tr>
-                  `);
-        
-                  // product row 2
+                subtotal = 0
+                for (i = 0; i < products.length; i++) {
+                  if (quantities[i] > 0) {
+                  // product row
+                  extended_price = quantities[i] * products[i].price
+                  subtotal += extended_price;
                   document.write(`
-                  <tr>
-                    <td width="43%">${item2}</td>
-                    <td align="center" width="11%">${quantity2}</td>
-                    <td width="13%">\$${price2}</td>
-                    <td width="54%">\$${extended_price2}</td>
-                  </tr>
-                  `);
-                
-                  // product row 3
-                  document.write(`
-                  <tr>
-                    <td width="43%">${item3}</td>
-                    <td align="center" width="11%">${quantity3}</td>
-                    <td width="13%">\$${price3}</td>
-                    <td width="54%">\$${extended_price3}</td>
-                  </tr>
-                  `);
-        
-                  // product row 4
-                  document.write(`
-                  <tr>
-                    <td width="43%">${item4}</td>
-                    <td align="center" width="11%">${quantity4}</td>
-                    <td width="13%">\$${price4}</td>
-                    <td width="54%">\$${extended_price4}</td>
-                  </tr>
-                  `);
+            <tr>
+              <td width="43%">${products[i].product}</td>
+              <td align="center" width="11%">${quantities[i]}</td>
+              <td width="13%">\$${products[i].price}</td>
+              <td width="54%">\$${extended_price}</td>
+            </tr>
+            `);
+                }
+               }
               // Compute tax
               var tax_rate = 0.0575;
               var tax = tax_rate * subtotal;
