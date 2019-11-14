@@ -3,7 +3,7 @@ var products = [
         //Products 1 
             "product" : "Apple Macbook",
             "price" : 1200.00,
-            "image" : 
+            "image": 
 },
 {
         //Products 2 
