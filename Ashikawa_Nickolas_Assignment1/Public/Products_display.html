@@ -39,7 +39,7 @@ function isNonNegInt(q, return_errors = false) {
             } else if(total_qty == 0) { // no quantity selections, just give a general alert
                 alert("Please select some quantities!");
             } else { // all good to go!
-                window.location = `./Invoice.html${document.location.search}`;
+                window.location = `./Invoice.html${document.location.search}`; //Redirects itself
                 window.stop;
             }
         }
@@ -58,6 +58,11 @@ function isNonNegInt(q, return_errors = false) {
     <link href="products_style.css" rel="stylesheet">
 </head>
 
+<style>
+body{
+    background-image: url("images-1.jpg");
+}
+</style>
 <body>
         <form name="product_form" action="" method="GET">
     <header>

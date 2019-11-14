@@ -20,5 +20,7 @@ app.post("/process_form", function (request, response) {
     
 } 
 });
+
 app.use(express.static('./Public'));
-app.listen(8080, () => console.log(`listening on port 8080`));
+
+var listener = app.listen(8080, () => console.log(`listening on port 8080`));

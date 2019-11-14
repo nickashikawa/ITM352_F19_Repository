@@ -9,13 +9,13 @@ var products = [
         //Products 2 
             "product" : "Windows Surface Pro",
             "price" : 900.00,
-            "image" : "./Windows_Dell.jpeg"
+            "image" : "./Windows_Surface_Pro.jpeg"
 },
 {
         //Products 3 
             "product" : "Windows Dell",
             "price" : 1000.00,
-            "image" : "./Windows_Surface_Pro.jpeg"
+            "image" : "./Windows_Dell.jpeg"
 },
 {
         //Products 4 
