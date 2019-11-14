@@ -2,28 +2,36 @@
 /* general styling */
 html {
   
-  font-family: 'Impact', sans-serif;
+  font-family: 'URW Chancery L', cursive;
   background-color: tan;
-  font-size: 15px;
-  text-align: left;
-  
-  
+  background-image: url("./Star_Background.jpeg");
+  font-size: 40px;
+  text-align: left; 
+  alt: "Avatar"; 
 }
 /*headings*/
 
-h1, h2 {
-  font-family: 'Impact', sans-serif;
+h1 {
+  font-family: 'URW Chancery L', cursive;
+  text-align: center;
+  font-size: 50px;
+
+} 
+h2 {
+  font-family: 'URW Chancery L', cursive;
   text-align: left;
-  font-size: 20px;
+  font-size: 40px;
 
 }
+
 /*image */
 img {
-width: 100px;
-height: 100px;
+width: 200px;
+height: 200px;
 position: relative;
-border-radius: 8px;
+border-radius: 75px;
 margin-right: auto;
 margin-left: auto;
-
+border-radius: 75%;   
 }
+/* Took from CSS Styling Website /*
