@@ -1,10 +1,30 @@
-     <!DOCTYPE html>
+<script src="./product_data.js" type="text/javascript"> //uses get request for the product list</script> 
+<script>
+  //referenced from assignment 1 examples
+        let params = (new URL(document.location)).searchParams;
+        var quantities = [];
+        // processing the invoice to create the form from the data entered
+        if (params.has('submitPurchase')) {
+          for (i = 0; i < products.length; i++) {
+            if (params.has(`quantity${i}`)) {
+              a_qty = params.get(`quantity${i}`);
+              quantities[i] = a_qty;
+            }
+          }
+        } else {
+          document.write('Please enter a valid quantity!');
+        }
+        console.log(quantities);
+      </script>  
+
+  <!DOCTYPE html>
   <html lang="en">
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <title>Document</title>
+      <link href="invoice_style.css" rel="stylesheet">
     </head>
     <body>
         <table border="2">
