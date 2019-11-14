@@ -1,32 +1,20 @@
 <script src="products.js"type="text/javascript"></script>
 <script>
-    products = [
-            //Products 1
-            {
-                Brand1 = "Apple Macbook",
-                Price1 = "1200.00",
-                Image1 = "./Apple_Macbook.jpeg",
-            },
-            {
-            //Products 2
-                Brand2 = "Windows Surface Pro",
-                Price2 = "35.00",
-                Image2 = "./Windwos_Surface_Pro.jpeg",
-            },
-            {
-            //Products 3
-                Brand3 = "Windows Dell",
-                Price3 = "45.00",
-                Image3 = "./Windows_Dell.jpeg",
-            },
-            {
-            //Products 4
-                Brand4 = "Windows Surface Laptop ",
-                Price4 = "10.00",
-                Image4 = "./Windows_Surface_Laptop.jpeg",
-            }
-        ];
-                
+//Referenced from assignment 1 examples
+let params = (new URL(document.location)).searchParams;
+var quantities = [];
+//Processing the invoice to create the form from the data entered
+if (params.has('submitPurchase')){
+  for (i = 0; i < products.length; i++){
+    if (param.has(`quantity${i}`)) {
+      a_qty = params.get(`quantity${i}`);
+      quantities[i] = a_qty;
+    }
+  }
+} else {
+  document.write('Please enter a valid quantity!');
+}
+console.log(quantities);
 </script>
 
 <!DOCTYPE html>
@@ -42,37 +30,35 @@
 </head>
 
 <body>
-    
+        <form name="product_selection_form" action="" method="GET">
     <header>
         <h1>Laptop Shop</h1>
     </header>
-    <div>
-        <aside>
-            <div style="font-size:4rem;text-align:center;font-weight: bold;font-style: italic; color: white">
-                We sell from
-                around the globe!
-            </div>
-        </aside>
+    <div> 
 
         <main>
-            
-<script>
-    for(i=0; i< products.length; i++) {
-document.write(`
-<section class="item">
-                <h2>${products[i].brand}</h2>
-                <p>$${products[i].price}</p>
-                <img src="${products[i].image}">
-            </section>
-`);
-}
-</script>
+
+            <script>
+             for (i = 0; i < products.length; i++) {
+                        document.write(`
+                            <section class="item">
+                                <h2>${products[i].brand}</h2>
+                                <p>$${products[i].price}</p>
+                                <label id="quantity${i}_label"}">Quantity</label>
+                                <input type="text" placeholder="0" name="quantity${i}" 
+                                onkeyup="checkQuantityTextbox(this);">
+                                <img src="${products[i].image}">
+                            </section>
+                        `);
+                }    
+        </script>
         </main>
     </div>
     <footer>
         <h1>
             Your One Stop For New Laptops
         </h1>
+        <input type="submit" value="Purchase!" name="purchase_submit">
     </footer>
 </body>
 
