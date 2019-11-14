@@ -1,4 +1,4 @@
-var data = require('./Public/product_list.js'); //get the data from product_data.js
+var data = require('./Public/product_list.js'); //get the data from product_list.js
 var products = data.products;
 
 var express = require('express');
