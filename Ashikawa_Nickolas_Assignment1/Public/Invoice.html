@@ -27,7 +27,7 @@
       <link href="invoice_style.css" rel="stylesheet">
     </head>
     <body>
-        <table border="2">
+        <table border="1">
           <tbody>
               <tr>
                 <th style="text-align: center;" width="43%">Item</th>
@@ -75,7 +75,25 @@
                     <td width="54%">\$${extended_price4}</td>
                   </tr>
                   `);
-        
+              // Compute tax
+              var tax_rate = 0.0575;
+              var tax = tax_rate * subtotal;
+      
+              // Compute shipping
+              if (subtotal <= 50) {
+                shipping = 2;
+              }
+              else if (subtotal <= 100) {
+                shipping = 5;
+              }
+              else {
+                shipping = 0.05 * subtotal; // 5% of subtotal
+              }
+      
+              // Compute grand total
+              var total = subtotal + tax + shipping;
+
+
                  </script>
                   <tr>
                     <td colspan="4" width="100%">&nbsp;</td>

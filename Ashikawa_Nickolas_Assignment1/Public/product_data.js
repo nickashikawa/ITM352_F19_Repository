@@ -3,7 +3,7 @@ var products = [
         //Products 1 
             "product" : "Apple Macbook",
             "price" : 1200.00,
-            "image" : "/Users/nickolasashikawa/Documents/GitHub/ITM352_F19_Repository/Ashikawa_Nickolas_Assignment1/Public/images/Apple_Macbook.jpeg",
+            "image" : 
 },
 {
         //Products 2 

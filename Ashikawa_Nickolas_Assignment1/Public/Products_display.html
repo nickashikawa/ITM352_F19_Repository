@@ -39,7 +39,7 @@ function isNonNegInt(q, return_errors = false) {
             } else if(total_qty == 0) { // no quantity selections, just give a general alert
                 alert("Please select some quantities!");
             } else { // all good to go!
-                window.location = `./invoice.html${document.location.search}`;
+                window.location = `./Invoice.html${document.location.search}`;
                 window.stop;
             }
         }
@@ -59,9 +59,10 @@ function isNonNegInt(q, return_errors = false) {
 </head>
 
 <body>
-        <form name="product_selection_form" action="" method="GET">
+        <form name="product_form" action="" method="GET">
     <header>
         <h1>Laptop Shop</h1>
+        <link href="products_style.css" rel="stylesheet">
     </header>
     <div> 
 
@@ -72,11 +73,12 @@ function isNonNegInt(q, return_errors = false) {
                         document.write(`
                             <section class="item">
                                 <h2>${products[i].brand}</h2>
+                                <br><img src="${products[i].image}">
                                 <p>$${products[i].price}</p>
                                 <label id="quantity${i}_label"}">Quantity</label>
                                 <input type="text" placeholder="0" name="quantity${i}" 
                                 onkeyup="checkQuantityTextbox(this);">
-                                <img src="${products[i].image}">
+
                             </section>
                         `);
                 }    
@@ -84,9 +86,7 @@ function isNonNegInt(q, return_errors = false) {
         </main>
     </div>
     <footer>
-        <h1>
-            Your One Stop For New Laptops
-        </h1>
+
         <input type="submit" value="Purchase!" name="purchase_submit">
     </footer>
 </body>
