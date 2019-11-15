@@ -20,6 +20,14 @@ app.post("/process_form", function (request, response) {
     
 } 
 });
-app.use(express.static('./Public'));
 
-var listener = app.listen(8080, () => console.log(`listening on port 8080`));
+function isNonNegInt(q, returnErrors = false) {
+    errors = []; // assume that quantity data is valid 
+    if (q == "") { q = 0; }
+    if (Number(q) != q) errors.push('Not a number!'); //check if value is a number
+    if (q < 0) errors.push('Negative value!'); //check if value is a positive number
+    if (parseInt(q) != q) errors.push('Not an integer!'); //check if value is a whole number
+    return returnErrors ? errors : (errors.length == 0);
+ }
+app.use(express.static('./Public'));
+app.listen(8080, () => console.log(`listen on port 8080`))
