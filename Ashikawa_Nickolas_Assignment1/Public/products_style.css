@@ -2,34 +2,35 @@
 /* general styling */
 html {
   
-  font-family: 'URW Chancery L', cursive;
+  font-family: 'American TypeWriter', serif;
   background-color: tan;
-  background-image: url("./Star_Background.jpeg");
+  background-image: url("./Star_Wallpaper.jpeg");
   font-size: 40px;
-  text-align: left; 
+  text-align: center; /* Product Images, Price, and Quantity */ 
 }
 /*headings*/
 
 h1 {
-  font-family: 'URW Chancery L', cursive;
-  text-align: center;
+  font-family: 'American TypeWriter', serif;
+  text-align: center; /* Title Page */
   font-size: 50px;
 
 } 
 h2 {
-  font-family: 'URW Chancery L', cursive;
-  text-align: left;
+  font-family: 'American TypeWriter', serif;
+  text-align: left; /* Product Names */
   font-size: 40px;
 
 }
 
 /*image */
 img {
-width: 400px;
-height: 110px;
+width: 200px;
+height: 200px;
 position: relative;
-border-radius: 8px;
+border-radius: 5px;
 margin-right: auto;
 margin-left: auto;
 }
 /* Took from CSS Styling Website /*
+
