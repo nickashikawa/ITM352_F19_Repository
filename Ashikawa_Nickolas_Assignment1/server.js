@@ -1,8 +1,9 @@
+//Creating a server via express//
 var data = require('./Public/product_data.js'); //get the data from product_data.js
 var products = data.products;
 
-var express = require('express');
-var app = express();
+var express = require('express'); //Server requires express to run//
+var app = express(); //Run the express function and start express//
 var myParser = require("body-parser");
 var data = require("./Public/product_data.js");
 
@@ -29,5 +30,6 @@ function isNonNegInt(q, returnErrors = false) {
     if (parseInt(q) != q) errors.push('Not an integer!'); //check if value is a whole number
     return returnErrors ? errors : (errors.length == 0);
  }
-app.use(express.static('./Public'));
+app.use(express.static('./Public')); //Creates a static server using express from the public folder
 app.listen(8080, () => console.log(`listen on port 8080`))
+

@@ -1,5 +1,4 @@
-<script src="./product_data.js" type="text/javascript"></script>
-<script src="./Column.html" type="text/html"></script>
+<script src="./product_data.js" type="text/javascript"></script> 
 <script>
 //Referenced from assignment 1 examples
 function isNonNegInt(q, return_errors = false) {
@@ -22,6 +21,7 @@ function isNonNegInt(q, return_errors = false) {
         if (params.has('submitPurchase')) {
             has_errors = false; // assume quantities are valid from the start
             total_qty = 0; // need to check if something was selected so we will look if the total > 0
+            //For every product in the array, write the product number, display its image and name, and list price
             for (i = 0; i < products.length; i++) {
                 if (params.has(`quantity${i}`)) {
                     a_qty = params.get(`quantity${i}`);
