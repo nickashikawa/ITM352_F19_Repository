@@ -23,6 +23,42 @@ h2 {
   font-size: 40px;
 
 }
+div {
+  border: 5px solid gray;
+  display: flex;
+}
+main {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  background-position: center;
+  background-color: rgba(255, 250, 205, 0.473);
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.item img {
+  width: 200px;
+  height: 200px;
+  border: 3px solid gray;
+  border-radius: 50%;
+}
+
+input[type = submit] {
+  width: 12em;
+}
+
+footer {
+  text-align: center;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  border-radius: 50%;
+  border: 3px solid gray;
+}
 
 /*image */
 img {
