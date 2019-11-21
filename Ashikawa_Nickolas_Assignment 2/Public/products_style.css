@@ -1,0 +1,73 @@
+/* style referenced from SmartPhoneProducts2 */
+/* general styling */
+html {
+  
+  font-family: 'American TypeWriter', serif;
+  background-color: tan;
+  background-image: url("./Star_Wallpaper.jpg");
+  font-size: 40px;
+  text-align: center; /* Product Images, Price, and Quantity */ 
+
+}
+/*headings*/
+
+h1 {
+  font-family: 'American TypeWriter', serif;
+  text-align: center; /* Title Page */
+  font-size: 50px;
+
+} 
+h2 {
+  font-family: 'American TypeWriter', serif;
+  text-align: left; /* Product Names */
+  font-size: 40px;
+
+}
+div {
+  border: 5px solid gray;
+  display: flex;
+}
+main {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  background-position: center;
+  background-color: rgba(255, 250, 205, 0.473);
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.item img {
+  width: 200px;
+  height: 200px;
+  border: 3px solid black;
+  border-radius: 50%;
+}
+
+input[type = submit] {
+  width: 12em;
+}
+
+footer {
+  text-align: center;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  border-radius: 50%;
+  border: 3px solid black;
+}
+
+/*image */
+img {
+width: 200px;
+height: 200px;
+position: relative;
+border-radius: 5px;
+margin-right: auto;
+margin-left: auto;
+}
+/* Took from CSS Styling Website /*
+
