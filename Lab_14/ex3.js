@@ -14,7 +14,14 @@ if (fs.existsSync(filename)) {
 
     users_reg_data = JSON.parse(data);
 
-    console.log(users_reg_data.itm352.password);
+username = 'newuser'
+users_reg_data[username] = {};
+reg_data[username].password = 'newpass';
+reg_data[username].email = 'newuser@user.com';
+
+fs.writeFileSync(filename, JSON.stringify(users_reg_data));
+
+    console.log(users_reg_data);
 } else {
     console.log(filename + 'does not exist');
 }
@@ -47,5 +54,39 @@ app.post("/login", function (request, response) {
     }
 
 });
+
+app.get("/register", function (request, response) {
+    // Give a simple register form
+    str = `
+<body>
+<form action="" method="POST">
+<input type="text" name="username" size="40" placeholder="enter username" ><br />
+<input type="password" name="password" size="40" placeholder="enter password"><br />
+<input type="password" name="repeat_password" size="40" placeholder="enter password again"><br />
+<input type="email" name="email" size="40" placeholder="enter email"><br />
+<input type="submit" value="Submit" id="submit">
+</form>
+</body>
+    `;
+    response.send(str);
+ });
+
+ app.post("/register", function (request, response) {
+    // process a simple register form
+
+    // validate registration data 
+
+    // save new user 
+
+    username = request.body.username;
+    users_reg_data[username] = {};
+    reg_data[username].password = request.body.password;
+    reg_data[username].email = request.body.email;
+
+fs.writeFileSync(filename, JSON.stringify(users_reg_data));
+
+response.send(`$(username)registered!`);
+
+ });
 
 app.listen(8080, () => console.log(`listening on port 8080`));
