@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var myParser = require("body-parser");
+var fs = require ("fs");
 
 var filename = 'user_data.json';
 
@@ -16,8 +17,8 @@ if (fs.existsSync(filename)) {
 
 username = 'newuser'
 users_reg_data[username] = {};
-reg_data[username].password = 'newpass';
-reg_data[username].email = 'newuser@user.com';
+users_reg_data[username].password = 'newpass';
+users_reg_data[username].email = 'newuser@user.com';
 
 fs.writeFileSync(filename, JSON.stringify(users_reg_data));
 
