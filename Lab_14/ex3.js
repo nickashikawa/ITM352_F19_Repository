@@ -81,8 +81,8 @@ app.get("/register", function (request, response) {
 
     username = request.body.username;
     users_reg_data[username] = {};
-    reg_data[username].password = request.body.password;
-    reg_data[username].email = request.body.email;
+    users_reg_data[username].password = request.body.password;
+    users_reg_data[username].email = request.body.email;
 
 fs.writeFileSync(filename, JSON.stringify(users_reg_data));
 

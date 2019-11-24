@@ -1,0 +1,37 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login Page</title>
+
+    <script src = "./product_data.js"></script>
+    <script>
+    let params = (new URL(document.location)).searchParams;
+    if (params.has("LoginError")) {
+alert(params.get("LoginError"));
+    }
+    </script>
+</head>
+<body>
+    <h1>Laptop Shop Login Page!</h1>
+    <p>To buy my products you must by<br> login or register as an offical Campp Member</p>
+    <form method="POST" name="Login_Form">
+
+        <input type="text" name="username" size="40" placeholder="Enter Username" ><br/>
+        <input type="password" name="password" size="40" placeholder="Enter Password"><br/>
+        <input type="submit" value="Login" id="submit">
+
+        </form>
+        
+        
+        
+        <a id="reg_link"><button type="button">Register</button></a>
+</body>
+</html>
+
+<script>
+    //Sets link with quantity data to pass to next page
+reg_link.href="registration.html" + document.location.search;
+Login_Form.action="./LoginForm" + document.location.search; 
+</script>
