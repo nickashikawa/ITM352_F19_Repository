@@ -6,25 +6,25 @@ var products = [
         //Products 1 
             "product" : "Apple Macbook",
             "price" : 1200.00,
-            "image": "./Apple_Macbook.png" 
+            "image": "./Images/Apple_Macbook.png" 
 },
 {
         //Products 2 
             "product" : "Windows Surface Pro",
             "price" : 900.00,
-            "image" : "./Windows_Surface_Pro.png"
+            "image" : "./Images/Windows_Surface_Pro.png"
 },
 {
         //Products 3 
             "product" : "Windows Dell",
             "price" : 1000.00,
-            "image" : "./Windows_Dell.png"
+            "image" : "./Images/Windows_Dell.png"
 }, 
 {
         //Products 4 
             "product" : "Microsoft Surface Laptop",
             "price" : 950.00,
-            "image" : "./Microsoft_Surface_Laptop.jpeg"
+            "image" : "./Imgages/Microsoft_Surface_Laptop.jpeg"
 },
 
 ];
