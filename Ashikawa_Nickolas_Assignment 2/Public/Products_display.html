@@ -15,67 +15,6 @@
         if (theTextbox.value.trim() == '') errs = ['Quantity'];
         document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
     }
-    //Referenced from Assignment 2 Example//
-    var products = {};
-    async function display_products(the_products) {
-        products = the_products;
-        for (i = 0; i < products.length; i++) {
-            products_main_display.innerHTML +=
-                `
-            <section class="item">
-                <h2>${products[i].brand}</h2>
-                <p>$${products[i].price}</p>
-                <div>
-                <label id="quantity${i}_label"}">Quantity</label>
-                <input type="text" placeholder="0" name="quantity${i}" 
-                onkeyup="checkQuantityTextbox(this);">
-                </div>
-                <img src="${products[i].image}">
-            </section>
-        `;
-        }
-    }
-    // use fetch to retrieve it, and report any errors that occur in the fetch operation
-    // once the products have been successfully loaded and formatted as a JSON object
-    async function fetchProducts() {
-        await fetch('products').then(function (response) {
-            if (response.ok) {
-                response.json().then(function (json) {
-                    display_products(json);
-                    redisplay();
-                });
-            } else {
-                console.log('Network request for products.json failed with response ' + response.status + ': ' + response.statusText);
-            }
-        });
-    }
-
-    function redisplay() {
-        let params = (new URL(document.location)).searchParams; // get the query string which has the form data
-        // form was submitted so check that quantities are valid then redirect to invoice if ok.
-        if (params.has('purchase_submit')) {
-            has_errors = false; // assume quantities are valid from the start
-            total_qty = 0; // need to check if something was selected so we will look if the total > 0
-            for (i = 0; i < products.length; i++) {
-                if (params.has(`quantity${i}`)) {
-                    a_qty = params.get(`quantity${i}`);
-                    // make textboxes sticky in case of invalid data
-                    product_selection_form[`quantity${i}`].value = a_qty;
-                    total_qty += a_qty;
-                    if (!isNonNegInt(a_qty)) {
-                        has_errors = true; // oops, invalid quantity
-                        checkQuantityTextbox(product_selection_form[`quantity${i}`]); // show where the error is
-                    }
-                }
-            }
-            // Now respond to errors or redirect to invoice if all is ok
-            if (has_errors) {
-                alert("Please enter only valid quantities!");
-            } else if (total_qty == 0) { // no quantity selections, just give a general alert
-                alert("Please select some quantities!");
-            }
-        }
-    }
 
     window.onload = function () {
         let params = (new URL(document.location)).searchParams; // get the query string which has the form data

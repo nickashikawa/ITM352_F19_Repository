@@ -31,7 +31,6 @@ function isNonNegInt(q, returnErrors = false) {
     return returnErrors ? errors : (errors.length == 0);
 }
 app.use(express.static('./Public')); //Creates a static server using express from the public folder
-app.listen(8080, () => console.log(`listen on port 8080`))
 
 // Login server code from Lab 14//
 
@@ -132,4 +131,19 @@ app.post("/register.html", function (req, res) {
 
 
 //If valid send to invoice, if not send back to form//
+function process_quantity_form(POST, response) {
+    if (typeof POST['login_submit'] != 'undefined') {
+        //Checks if username exists
+        var qString = querystring.stringify(POST);
+        the_username = POST.username;
+        if (typeof reg_user_data[the_username] != 'undefined') {
+            if (reg_user_data[the_username].password == POST.password) {
+                response.redirect('Invoice.html?' + qString);
+            } else {
+                response.redirect('Login_Form.html');
+            }
+        }
+    }
+}
 
+app.listen(8080, () => console.log(`listen on port 8080`))
