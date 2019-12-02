@@ -45,7 +45,7 @@ if (false.existsSync(filename)) {
     console.log(filemame + 'does not exist!');
 }
 
-app.post("./LoginForm.html", function (req, res) {
+app.post("./Login_Form.html", function (req, res) {
     var LogError = [];
     console.log(req.body);
     console.log(request.body);
@@ -79,7 +79,7 @@ app.post("./LoginForm.html", function (req, res) {
             req.query.password = req.body.password;
             req.query.LogError = LogError.join(';');
         }
-        res.redirect('./LoginForm.html?' + querystring.stringify(req.query));
+        res.redirect('./Login_Form.html?' + querystring.stringify(req.query));
 
     }
 });
@@ -121,7 +121,7 @@ app.post("/register.html", function (req, res) {
 
         fs.writeFileSync(filename, JSON.stringify(users_reg_data));
 
-        response.redirect("./LoginForm.html");
+        response.redirect("./Login_Form.html");
     } else {
         response.redirect("./registration.html");
     }

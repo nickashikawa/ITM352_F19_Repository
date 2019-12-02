@@ -33,7 +33,7 @@ alert(params.get("LoginError"));
 <script>
     //Sets link with quantity data to pass to next page
 reg_link.href="registration.html" + document.location.search;
-Login_Form.action="./LoginForm" + document.location.search; 
+Login_Form.action="./Login_Form" + document.location.search; 
 if(has_errors) {
                 alert("Please enter only valid quantities!");
             } else if(total_qty == 0) { // no quantity selections, just give a general alert
