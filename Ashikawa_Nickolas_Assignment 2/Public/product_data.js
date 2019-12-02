@@ -24,7 +24,7 @@ var products = [
         //Products 4 
             "product" : "Microsoft Surface Laptop",
             "price" : 950.00,
-            "image" : "./Imgages/Microsoft_Surface_Laptop.jpeg"
+            "image" : "./Images/Microsoft_Surface_Laptop.jpeg"
 },
 
 ];
