@@ -1,3 +1,4 @@
+
 <html lang="en">
 
 <head>
@@ -5,53 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Registration Page</title>
-    <script>
-            //Sets link with invoice data to pass to next page
-            reg_form.action = "/register" + document.location.search;
-        </script>
+    <script> src = "server.js" </script>
 </head>
+<script>
+     var password = document.getElementById("password") //turns password into an object
+        ,repeat_password = document.getElementById("repeat_password"); //turns repeat password into an object
+        
+        function validatePassword(){
+          if(password.value != repeat_password.value) { //if password is not equal to repeat password, say passwords don't match
+            alert("Please make sure passwords match.");
+        response.redirect('public/registration.html') 
+          } 
+        else{
+            response.redirect('Login_Successful') 
+        }
+      
+        }
+          validatePassword();
+</script>
 
 <body>
-
-    <form id="reg_form" method="POST" name="Registration_Form">
-        <table>
-            <tr>
-                <th colspan="2">Registration Form</th>
-            </tr>
-            <tr>
-                <td><label for="Username">Username:</label></td>
-                <td><input type="text" name="Username" value="" id="Username"></td>
-            </tr>
-            <tr>
-                <td><label for="Name">First Name:</label></td>
-                <td><input type="text" name="Name" value="" id="Name"></td>
-            </tr>
-            <tr>
-                <td><label for="Name">Last Name:</label></td>
-                <td><input type="text" name="Name" value="" id="Name"></td>
-            </tr>
-            <tr>
-                <td><label for="Password">Password</label></td>
-                <td><input type="password" name="Pass" value="" id="Password"></td>
-            </tr>
-            <tr>
-                <td><label for="ConfirmPass">Confirm Password:</label></td>
-                <td><input type="password" name="ConfirmPass" value="" id="ConfirmPass"></td>
-            </tr>
-            <tr>
-                <td><label for="Email">Email:</label></td>
-                <td><input type="text" name="Email" value="" id="Email"></td>
-            </tr>
-            <tr>
-                <td colspan="2" id="submit_reg"><input type="submit" name="submit" value="Register"></td>
-            </tr>
-
-        </table>
-
-    </form>
+            <div>
+                    <form  method="POST" action="" onsubmit=validatePassword() >
+                      <input type="text" name="fullname" size="40" pattern="[a-zA-Z]+[ ]+[a-zA-Z]+" maxlength="30" placeholder="Enter First & Last Name"><br />
+                      <input type="text" name="username" size="40" pattern=".[a-z0-9]{3,10}" required title="Minimum 4 Characters, Maximum 10 Characters, Numbers/Letters Only" placeholder="Enter Username" ><br />
+                      <input type="email" name="email" size="40" placeholder="Enter Email" pattern="[a-z0-9._]+@[a-z0-9]+\.[a-z]{3,}$" required title="Please enter valid email."><br />
+                      <input type="password" id="password" name="password"  size="40" pattern=".{8,}" required title="8 Characters Minimum" placeholder="Enter Password"><br />
+                      <input type="password" id="repeat_password" name="repeat_password" size="40" pattern=".{8,}" required title="8 Characters Minimum" placeholder="Repeat Password"><br />
+                   
+                      <input type="submit" value="Submit" id="submit">
+                  </form></div>
 </body>
 
 </html>
 
 
-< --Help from https://www.w3schools.com/howto/howto_css_login_form.asp// -->
+<!--Help from https://www.w3schools.com/howto/howto_css_login_form.asp// -->
