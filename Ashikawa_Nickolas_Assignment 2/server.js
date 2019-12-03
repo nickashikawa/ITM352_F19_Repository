@@ -1,24 +1,46 @@
 //Creating a server via express//
-var data = require('./Public/product_data.js'); //get the data from product_data.js
-var products = data.products;
-
+const querystring = require('querystring');
+var products = require("./Public/product_data.js"); //get the data from product_data.js
+var filemame = 'user_data.json'
 var express = require('express'); //Server requires express to run//
 var app = express(); //Run the express function and start express//
 var myParser = require("body-parser");
-var data = require("./Public/product_data.js");
-
-app.all('*', function (request, response, next) {
-    console.log(request.method + ' to ' + request.path)
-    next();
-});
+var qs = require('querystring');
+var qstr = {};
+var braceletquantity = {};
 
 app.use(myParser.urlencoded({ extended: true }));
-//to process the response from what is typed in the form
-app.post("/process_form", function (request, response) {
-    let POST = request.body;
-    if (typeof POST['quantity_textbox'] != 'undefined') {
-        displayPurchase(POST, response);
 
+//Sourced from Mark Chou//
+//Go to invoice if quantity values are good, if not, redirect back to order page//
+app.get("/process_page", function (request, response) {
+    //check for valid quantities//
+    //look up request.query//
+    braceletquantity = request.query
+    console.log(params);
+    if (typeof params['purchase_submit'] != 'undefined') {
+        has_errors = false;
+        total_qty = 0;
+        for (i = 0; i < products.length; i++) {
+            has_errors = false;
+            total_qty = 0;
+            for (i = 0; i < products.length; i++) {
+                if (typeof params[`quantity${i}`] != 'undefined') {
+                    a_qty = params[`quantity${i}`];
+                    total_qty += a_qty;
+                    if (!isNonNegInt(a_qty)) {
+                        has_errors = true;
+                    }
+                }
+            }
+            qstr = querystring.stringify(request.query);
+            if (has_errors || total_qty == 0) {
+                qstr = querystring.stringify(request.query);
+                response.redirect("product_display.html?" + qstr);
+            } else {
+                response.redirect("Login_Form.html?" + qstr);
+            }
+        }
     }
 });
 
@@ -30,106 +52,170 @@ function isNonNegInt(q, returnErrors = false) {
     if (parseInt(q) != q) errors.push('Not an integer!'); //check if value is a whole number
     return returnErrors ? errors : (errors.length == 0);
 }
-app.use(express.static('./Public')); //Creates a static server using express from the public folder
-app.listen(8080, () => console.log(`listen on port 8080`))
 
-// Login server code from Lab 14//
+fs = require('fs');
 
-var filemame = 'user_data.json'
-if (false.existsSync(filename)) {
-    stats = fs.statSync(filemame);
-    console.log(filemame + 'has' + stats.size + 'characters');
-    data = fs.readFileSync(filemame, 'utf-8')
+if (fs.existsSync(filename)) {
+    stats = fs.statSync(filename) //gets stats from file
+
+    data = fs.readFileSync(filename, 'UTF-8');
+    console.log(typeof data);
     users_reg_data = JSON.parse(data);
-} else {
-    console.log(filemame + 'does not exist!');
 }
 
-app.post("./Login_Form.html", function (req, res) {
-    var LogError = [];
-    console.log(req.body);
+app.get("/Login_Form.html", function (request, response) {
+    str = `
+     <html lang="en">
+     
+     <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta http-equiv="X-UA-Compatible" content="ie-edge">
+     <title>Login Page</title>
+     
+     <link href="products_style.css" rel="stylesheet">
+     </head>
+     <body>
+
+    <h1>Laptop Shop Login Page!</h1>
+    <p>To buy my products you must<br> login or register as a member</p>
+    <form name="loginform" method="POST">
+        <input type="text" name="username" size="40" placeholder="Enter Username"><br />
+        <input type="password" name="password" size="40" placeholder="Enter Password"><br />
+        <input type="submit" value="Login" id="submit">
+    </form>
+</body>
+
+<h2>Register Here!</h2>
+
+<body>
+    <div>
+        <form action="./registration.html">
+            <input type="submit" value="Register" id="regpage" name="Register_Here">
+        </form>
+
+    </div>
+
+</body>
+<script>
+    regpage.href = "registration.html" + document.location.search;
+    loginform.action = "./Login" + document.location.search;
+</script>
+
+</html>
+`;
+    response.send(str);
+});
+
+app.post("./Login_Form.html", function (request, response) {
+    console.log(braceletquantity);
+    the_username = request.body.username
     console.log(request.body);
-    //Diagnostic
-    the_username = request.body.username;
     if (typeof users_reg_data[the_username] != 'undefined') {
         //Asking object if it has matching username, if it doesnt itll be undefined.
         if (users_reg_data[the_username].password == request.body.password) {
-            response.send(the_username + " Logged In!");
+            theQuantQuerystring = qs.stringify(braceletquantity);
+            response.redirect('/Invoice.html' + theQuantQuerystring + `&username=${the_username}`);
             //Redirect them to invoice here if they logged in correctly
         } else {
-            response.redirect('./registration.html');
+            response.redirect('./Login_Form.html');
         }
-        //See's if password matches what was typed
-    }
-
-    //To make username case sensitive//
-    //https://www.w3schools.com/jsref/jsref_tolowercase.asp//
-    the_username = req.body.username.toLowerCase();
-    if (typeof users_reg_data[the_username] != 'undefined') { //checks with JSON data to see if username already exists//
-        if (users_reg_data[the_username].password == req.body.password) { //make sure that password matches exactly//
-            req.query.username = the_username;
-            console.log(users_reg_data[req.query.username].name);
-            req.query.name = users_reg_data[req.query.username].name
-            res.redirect('/invoive.html?' + querystring.stringify(req.query));
-            return;
-        } else {
-            LogError.push = ('Invalid Password')
-            console.log(LogError);
-            req.query.username = the_username;
-            req.query.password = req.body.password;
-            req.query.LogError = LogError.join(';');
-        }
-        res.redirect('./Login_Form.html?' + querystring.stringify(req.query));
-
     }
 });
 
-app.post("/register.html", function (req, res) {
-    qstr = req.body
-    console.log(qstr);
+app.get("/registration.html", function (request, response){
+    
+    str= `
+    <html lang="en">
 
-    //username should have a minimum of 4 characters and maximum of 10//
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Registration Page</title>
+    <script>
+    //Sets link with invoice data to pass to next page
+    reg_form.action = "/register" + document.location.search;
+</script>
+</head>
 
+<body>
 
+    <form id="reg_form" method="POST" name="Registration_Form">
+        <table>
+            <tr>
+                <th colspan="2">Registration Form</th>
+            </tr>
+            <tr>
+                <td><label for="Username">Username:</label></td>
+                <td><input type="text" name="Username" value="" id="Username"></td>
+            </tr>
+            <tr>
+                <td><label for="Name">First Name:</label></td>
+                <td><input type="text" name="Name" value="" id="Name"></td>
+            </tr>
+            <tr>
+                <td><label for="Name">Last Name:</label></td>
+                <td><input type="text" name="Name" value="" id="Name"></td>
+            </tr>
+            <tr>
+                <td><label for="Password">Password</label></td>
+                <td><input type="password" name="Pass" value="" id="Password"></td>
+            </tr>
+            <tr>
+                <td><label for="ConfirmPass">Confirm Password:</label></td>
+                <td><input type="password" name="ConfirmPass" value="" id="ConfirmPass"></td>
+            </tr>
+            <tr>
+                <td><label for="Email">Email:</label></td>
+                <td><input type="text" name="Email" value="" id="Email"></td>
+            </tr>
+            <tr>
+                <td colspan="2" id="submit_reg"><input type="submit" name="submit" value="Register"></td>
+            </tr>
 
-    //Checking for name to have only letters to be valid//
-    //https://www.w3resource.com/javascript/form/all-letters-field.php//
-    if (/^[A-Az-z]+$/.test(req.body.name)) {
+        </table>
 
-    }
-    else {
-        nameerrors.push('Letters Only')
-    }
+    </form>
+</body>
 
-    //check if username exists// //Taken from Lab 14 ex4c.js//
-    //Validate: User must not exist already, case sensitive,password certain length with certain characters, email is email
+</html>`;
+response.send(str);
+});
 
-    //Save new user to file name (users_reg_data)
+app.post("/registration.html", function (request, response) {
+    console.log(braceletquantity);
+    the_username = request.body.username;
+    console.log(the_username,"Username is", typeof (users_reg_data[the_username]));
+
     username = request.body.username;
 
-    //Checks to see if username already exists
     errors = [];
-    //If array stays empty move on
+
     if (typeof users_reg_data[username] != 'undefined') {
-        errors.push("Username is Taken");
+        errors.push("Username is already taken");
     }
+   
     console.log(errors, users_reg_data);
+
     if (errors.length == 0) {
         users_reg_data[username] = {};
+        users_reg_data[username].username = request.body.username
         users_reg_data[username].password = request.body.password;
         users_reg_data[username].email = request.body.email;
 
-        fs.writeFileSync(filename, JSON.stringify(users_reg_data));
-
-        response.redirect("./Login_Form.html");
-    } else {
-        response.redirect("./registration.html");
+        theQuantQuerystring = qs.stringify(braceletquantity);
+        fs.writeFileSync(filemame, JSON.stringify(users_reg_data));
+        response.redirect("/Invoice.html?" + theQuantQuerystring + `&username=${the_username}`);
     }
 });
-//check if password is valid//
-//check if confirmed password is valid with the first password//
-//check if email is valid//
 
+    app.all('*', function (request, response, next) {
+        console.log(request.method + ' to ' + request.path)
+        next();
+    });
 
-//If valid send to invoice, if not send back to form//
+    app.use(express.static('./Public')); //Creates a static server using express from the public folder
+    app.listen(8080, () => console.log(`listen on port 8080`))
 
+  
