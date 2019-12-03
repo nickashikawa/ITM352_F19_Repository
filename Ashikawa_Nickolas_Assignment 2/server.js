@@ -13,7 +13,7 @@ app.use(myParser.urlencoded({ extended: true }));
 
 //Sourced from Mark Chou//
 //Go to invoice if quantity values are good, if not, redirect back to order page//
-app.get("/process_page", function (request, response) {
+app.get("/login.html", function (request, response) {
     //check for valid quantities//
     //look up request.query//
     laptopquantity = request.query;
@@ -37,9 +37,9 @@ app.get("/process_page", function (request, response) {
             qstr = querystring.stringify(request.query);
             if (has_errors || total_qty == 0) {
                 qstr = querystring.stringify(request.query);
-                response.redirect("product_display.html?" + qstr);
+                response.redirect("Products_display.html?" + qstr);
             } else {
-                response.redirect("login.html?" + qstr);
+                response.redirect("/login.html?" + qstr);
             }
         }
     }
@@ -83,7 +83,7 @@ app.get("/login.html", function (request, response) {
     <form name="loginform" method="POST">
         <input type="text" name="username" size="40" placeholder="Enter Username"><br />
         <input type="password" name="password" size="40" placeholder="Enter Password"><br />
-        <input type="submit" value="Login" id="submit">
+        <input type="submit" value="login" id="submit">
     </form>
 </body>
 
@@ -113,7 +113,7 @@ app.post("/login.html", function (request, response) {
             response.redirect('/Invoice.html?' + theQuantQuerystring + `&username=${the_username}`);
             //Redirect them to invoice here if they logged in correctly
         } else {
-            response.redirect('/login.html');
+            response.redirect('/login.html?');
         }
     }
 });
