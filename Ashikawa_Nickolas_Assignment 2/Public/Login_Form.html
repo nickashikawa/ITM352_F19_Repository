@@ -1,45 +1,52 @@
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login Page</title>
-
-    <script src = "./product_data.js"></script>
+    <link rel="stylesheet" href="products_style.css">
     <script>
-    let params = (new URL(document.location)).searchParams;
-    if (params.has("LoginError")) {
-alert(params.get("LoginError"));
-    }
+        let params = (new URL(document.location)).searchParams;
+        if (params.has("LoginError")) {
+            alert(params.get("LoginError"));
+        }
+        window.onload = function () { // creating the function for window.onload
+            //Check if we're getting redirected from the server because of an error
+            if (params.has('LogError')) { //if params has invalid registration data
+            }
+        }
     </script>
 </head>
+
+
+
 <body>
+
     <h1>Laptop Shop Login Page!</h1>
     <p>To buy my products you must<br> login or register as a member</p>
-    <form method="POST" name="Login_Form">
-
-        <input type="text" name="username" size="40" placeholder="Enter Username" ><br/>
-        <input type="password" name="password" size="40" placeholder="Enter Password"><br/>
+    <form name="loginform" method="POST">
+        <input type="text" name="username" size="40" placeholder="Enter Username"><br />
+        <input type="password" name="password" size="40" placeholder="Enter Password"><br />
         <input type="submit" value="Login" id="submit">
-
-        </form>
-        
-        
-        
-        <a id="reg_link"><button type="button">Register</button></a>
+    </form>
 </body>
-</html>
 
+<h2>Register Here!</h2>
+
+<body>
+    <div>
+        <form action="./registration.html">
+            <input type="submit" value="Register" id="regpage" name="Register_Here">
+        </form>
+
+    </div>
+
+</body>
 <script>
-    //Sets link with quantity data to pass to next page
-reg_link.href="registration.html" + document.location.search;
-Login_Form.action="./Login_Form" + document.location.search; 
-if(has_errors) {
-                alert("Please enter only valid quantities!");
-            } else if(total_qty == 0) { // no quantity selections, just give a general alert
-                alert("Please select some quantities!");
-            } else { // all good to go!
-                window.location = `./invoice.html${document.location.search}`; //Redirects itself
-                window.stop; 
-}
+    regpage.href = "registration.html" + document.location.search;
+    loginform.action = "./Login" + document.location.search;
 </script>
+
+</html>
