@@ -7,7 +7,7 @@ var app = express(); //Run the express function and start express//
 var myParser = require("body-parser");
 var qs = require('querystring');
 var qstr = {};
-var braceletquantity = {};
+var laptopquantity = {};
 
 app.use(myParser.urlencoded({ extended: true }));
 
@@ -16,7 +16,8 @@ app.use(myParser.urlencoded({ extended: true }));
 app.get("/process_page", function (request, response) {
     //check for valid quantities//
     //look up request.query//
-    braceletquantity = request.query
+    laptopquantity = request.query;
+    params = request.query;
     console.log(params);
     if (typeof params['purchase_submit'] != 'undefined') {
         has_errors = false;
@@ -38,7 +39,7 @@ app.get("/process_page", function (request, response) {
                 qstr = querystring.stringify(request.query);
                 response.redirect("product_display.html?" + qstr);
             } else {
-                response.redirect("./login.html?" + qstr);
+                response.redirect("login.html?" + qstr);
             }
         }
     }
@@ -63,7 +64,7 @@ if (fs.existsSync(filename)) {
     users_reg_data = JSON.parse(data);
 }
 
-app.get("./login.html", function (request, response) {
+app.get("/login.html", function (request, response) {
     str = `
      <html lang="en">
      
@@ -97,28 +98,22 @@ app.get("./login.html", function (request, response) {
     </div>
 
 </body>
-<script>
-    regpage.href = "registration.html" + document.location.search;
-    loginform.action = "./login.html" + document.location.search;
-</script>
-
 </html>
 `;
     response.send(str);
 });
 
-app.post("./login.html", function (request, response) {
-    console.log(braceletquantity);
+app.post("/login.html", function (request, response) {
+    console.log(laptopquantity);
     the_username = request.body.username
-    console.log(request.body);
     if (typeof users_reg_data[the_username] != 'undefined') {
         //Asking object if it has matching username, if it doesnt itll be undefined.
         if (users_reg_data[the_username].password == request.body.password) {
-            theQuantQuerystring = qs.stringify(braceletquantity);
+            theQuantQuerystring = qs.stringify(laptopquantity);
             response.redirect('/Invoice.html?' + theQuantQuerystring + `&username=${the_username}`);
             //Redirect them to invoice here if they logged in correctly
         } else {
-            response.redirect('./login.html');
+            response.redirect('/login.html');
         }
     }
 });
@@ -135,7 +130,7 @@ app.get("/registration.html", function (request, response){
     <title>Registration Page</title>
     <script>
     //Sets link with invoice data to pass to next page
-    reg_form.action = "/register" + document.location.search;
+    reg_form.action = "/registration" + document.location.search;
 </script>
 </head>
 
@@ -184,7 +179,7 @@ response.send(str);
 });
 
 app.post("/registration.html", function (request, response) {
-    console.log(braceletquantity);
+    console.log(laptopquantity);
     the_username = request.body.username;
     console.log(the_username,"Username is", typeof (users_reg_data[the_username]));
 
@@ -204,9 +199,11 @@ app.post("/registration.html", function (request, response) {
         users_reg_data[username].password = request.body.password;
         users_reg_data[username].email = request.body.email;
 
-        theQuantQuerystring = qs.stringify(braceletquantity);
         fs.writeFileSync(filemame, JSON.stringify(users_reg_data));
+        theQuantQuerystring = qs.stringify(laptopquantity);
         response.redirect("/Invoice.html?" + theQuantQuerystring + `&username=${the_username}`);
+    } else {
+        response.redirect('/registration.html?' + 'try again'); //if there are errors, send back to registration page to retype
     }
 });
 
@@ -216,6 +213,6 @@ app.post("/registration.html", function (request, response) {
     });
 
     app.use(express.static('./Public')); //Creates a static server using express from the public folder
-    app.listen(8080, () => console.log(`listen on port 8080`))
+    app.listen(8080, () => console.log(`listening on port 8080`))
 
   
