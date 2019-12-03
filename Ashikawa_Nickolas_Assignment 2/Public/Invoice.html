@@ -2,30 +2,100 @@
 <script>
   //referenced from assignment 1 examples
   let params = (new URL(document.location)).searchParams;
-  var quantities = [];
-  // processing the invoice to create the form from the data entered
-  if (params.has('submitPurchase')) {
+  products = {};
+  async function display_products(the_products) {
+    products = the_products;
     for (i = 0; i < products.length; i++) {
-      if (params.has(`quantity${i}`)) {
-        a_qty = params.get(`quantity${i}`);
-        quantities[i] = a_qty;
+      products_main_display.innerHTML +=
+        `
+        <section class="item">
+            <h2>${products[i].brand}</h2>
+            <p>$${products[i].price}</p>
+            <div>
+            <label id="quantity${i}_label"}">Quantity</label>
+            <input type="text" placeholder="0" name="quantity${i}" 
+            onkeyup="checkQuantityTextbox(this);">
+            </div>
+            <img src="${products[i].image}">
+        </section>
+    `;
+    }
+  }
+  // use fetch to retrieve it, and report any errors that occur in the fetch operation
+  // once the products have been successfully loaded and formatted as a JSON object
+  async function fetchProducts() {
+    await fetch('products').then(function (response) {
+      if (response.ok) {
+        response.json().then(function (json) {
+          display_selections(json);;
+        });
+      } else {
+        console.log('Network request for products.json failed with response ' + response.status + ': ' + response.statusText);
+      }
+    });
+  }
+
+  function display_selections(products) {
+
+    // processing the invoice to create the form from the data entered
+    if (params.has('submitPurchase')) {
+      subtotal = 0;
+      for (i = 0; i < products.length; i++) {
+          a_qty = params.get(`quantity${i}`);
+          if (a_qty > 0) {
+            //product row//
+            extended_price = a_qty * products[i].price
+            subtotal += extended_price;
+            invoice_row = invoice_table.insertRow(1)
+            invoice_row.innerHTML = (`
+          <tr>
+              <td width="43%">${products[i].product}</td>
+              <td align="center" width="11%">${quantities[i]}</td>
+              <td width="13%">\$${products[i].price}</td>
+              <td width="54%">\$${extended_price}</td>
+            </tr>
+          `);
+          }
+        }
+        subtotal_span.innerHTML = subtotal;
+
+        // Compute tax
+        var tax_rate = 0.0575;
+        var tax = tax_rate * subtotal;
+
+        var tax = tax_rate * subtotal;
+        tax_span.innerHTML = tax.toFixed(2);
+
+        // Compute shipping
+        if (subtotal <= 50) {
+          shipping = 2;
+        }
+        else if (subtotal <= 100) {
+          shipping = 5;
+        }
+        else {
+          shipping = 0.05 * subtotal; // 5% of subtotal
+        }
+        shipping_span.innerHTML = shipping.toFixed(2);
+
+        // Compute grand total
+        var total = subtotal + tax + shipping;
+        total_span.innerHTML = total.toFixed(2);
+
+      } else {
+        document.write('Please enter a valid quantity!');
       }
     }
-  } else {
-    document.write('Please enter a valid quantity!');
-  }
-  console.log(quantities);
-  
-  window.onload = function () {
-    console.log(params);
-    if(params.has("username")) { // Greet the user (personalization). 
-      alert(`Thank you for your purchase ${params.get("username")}. Please buy again soon!`);
-    } else { // this is security, must have a username or get bounced to login
-      alert("You must login or register before checking out!");
-      window.location = "login" + window.location.search;
+    window.onload = function () {
+      console.log(params);
+      if (params.has("username")) { // Greet the user (personalization). 
+        alert(`Thank you for your purchase ${params.get("username")}. Please buy again soon!`);
+      } else { // this is security, must have a username or get bounced to login
+        alert("You must login or register before checking out!");
+        window.location = "login" + window.location.search;
+      }
+      fetchProducts();
     }
-    fetchProducts();
-  }
 </script>
 
 <!DOCTYPE html>
@@ -53,43 +123,6 @@
         <th style="text-align: center;" width="13%">Price</th>
         <th style="text-align: center;" width="54%">Extended price</th>
       </tr>
-      <script>
-        subtotal = 0
-        for (i = 0; i < products.length; i++) {
-          if (quantities[i] > 0) {
-            // product row
-            extended_price = quantities[i] * products[i].price
-            subtotal += extended_price;
-            document.write(`
-            <tr>
-              <td width="43%">${products[i].product}</td>
-              <td align="center" width="11%">${quantities[i]}</td>
-              <td width="13%">\$${products[i].price}</td>
-              <td width="54%">\$${extended_price}</td>
-            </tr>
-            `);
-          }
-        }
-        // Compute tax
-        var tax_rate = 0.0575;
-        var tax = tax_rate * subtotal;
-
-        // Compute shipping
-        if (subtotal <= 50) {
-          shipping = 2;
-        }
-        else if (subtotal <= 100) {
-          shipping = 5;
-        }
-        else {
-          shipping = 0.05 * subtotal; // 5% of subtotal
-        }
-
-        // Compute grand total
-        var total = subtotal + tax + shipping;
-
-
-      </script>
       <tr>
         <td colspan="4" width="100%">&nbsp;</td>
       </tr>

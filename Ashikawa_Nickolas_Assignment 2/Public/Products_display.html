@@ -16,6 +16,40 @@
         document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
     }
 
+    var products = {};
+    async function display_products(the_products) {
+        products = the_products;
+        for (i = 0; i < products.length; i++) {
+            products_main_display.innerHTML +=
+                `
+            <section class="item">
+                <h2>${products[i].brand}</h2>
+                <p>$${products[i].price}</p>
+                <div>
+                <label id="quantity${i}_label"}">Quantity</label>
+                <input type="text" placeholder="0" name="quantity${i}" 
+                onkeyup="checkQuantityTextbox(this);">
+                </div>
+                <img src="${products[i].image}">
+            </section>
+        `;
+        }
+    }
+    // use fetch to retrieve it, and report any errors that occur in the fetch operation
+    // once the products have been successfully loaded and formatted as a JSON object
+    async function fetchProducts() {
+        await fetch('products').then(function (response) {
+            if (response.ok) {
+                response.json().then(function (json) {
+                    display_products(json);
+                    redisplay();
+                });
+            } else {
+                console.log('Network request for products.json failed with response ' + response.status + ': ' + response.statusText);
+            }
+        });
+    }
+
     //Taken from Assignment 2 Examples//
     function redisplay() {
         let params = (new URL(document.location)).searchParams; // get the query string which has the form data
@@ -41,9 +75,6 @@
             } else if (total_qty == 0) { // no quantity selections, just give a general alert
                 alert("Please select some quantities!");
             } else { // all good to go!
-                window.location = `./Login_Form.html${document.location.search}`; //Redirects itself
-                window.stop;
-
             }
         }
     }
