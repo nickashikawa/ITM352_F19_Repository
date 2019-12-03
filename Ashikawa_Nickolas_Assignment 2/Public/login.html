@@ -8,17 +8,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login Page</title>
     <link rel="stylesheet" href="products_style.css">
-    <script>
-        let params = (new URL(document.location)).searchParams;
-        if (params.has("LoginError")) {
-            alert(params.get("LoginError"));
-        }
-        window.onload = function () { // creating the function for window.onload
-            //Check if we're getting redirected from the server because of an error
-            if (params.has('LogError')) { //if params has invalid registration data
-            }
-        }
-    </script>
 </head>
 
 
@@ -27,7 +16,7 @@
 
     <h1>Laptop Shop Login Page!</h1>
     <p>To buy my products you must<br> login or register as a member</p>
-    <form name="loginform" method="GET">
+    <form name="loginform" method="POST">
         <input type="text" name="username" size="40" placeholder="Enter Username"><br />
         <input type="password" name="password" size="40" placeholder="Enter Password"><br />
         <input type="submit" value="Login" id="submit">
@@ -47,7 +36,7 @@
 </body>
 <script>
     regpage.href = "registration.html" + document.location.search;
-    loginform.action = "./Login" + document.location.search;
+    loginform.action = "/login.html" + document.location.search;
 </script>
 
 </html>

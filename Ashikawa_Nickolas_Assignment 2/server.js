@@ -38,7 +38,7 @@ app.get("/process_page", function (request, response) {
                 qstr = querystring.stringify(request.query);
                 response.redirect("product_display.html?" + qstr);
             } else {
-                response.redirect("Login_Form.html?" + qstr);
+                response.redirect("./login.html?" + qstr);
             }
         }
     }
@@ -63,7 +63,7 @@ if (fs.existsSync(filename)) {
     users_reg_data = JSON.parse(data);
 }
 
-app.get("/Login_Form.html", function (request, response) {
+app.get("./login.html", function (request, response) {
     str = `
      <html lang="en">
      
@@ -99,7 +99,7 @@ app.get("/Login_Form.html", function (request, response) {
 </body>
 <script>
     regpage.href = "registration.html" + document.location.search;
-    loginform.action = "./Login" + document.location.search;
+    loginform.action = "./login.html" + document.location.search;
 </script>
 
 </html>
@@ -107,7 +107,7 @@ app.get("/Login_Form.html", function (request, response) {
     response.send(str);
 });
 
-app.post("./Login_Form.html", function (request, response) {
+app.post("./login.html", function (request, response) {
     console.log(braceletquantity);
     the_username = request.body.username
     console.log(request.body);
@@ -115,10 +115,10 @@ app.post("./Login_Form.html", function (request, response) {
         //Asking object if it has matching username, if it doesnt itll be undefined.
         if (users_reg_data[the_username].password == request.body.password) {
             theQuantQuerystring = qs.stringify(braceletquantity);
-            response.redirect('/Invoice.html' + theQuantQuerystring + `&username=${the_username}`);
+            response.redirect('/Invoice.html?' + theQuantQuerystring + `&username=${the_username}`);
             //Redirect them to invoice here if they logged in correctly
         } else {
-            response.redirect('./Login_Form.html');
+            response.redirect('./login.html');
         }
     }
 });

@@ -1,41 +1,40 @@
-
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Registration Page</title>
-    <script> src = "server.js" </script>
+    <script>src="server.js"</script>
 </head>
 <script>
-     var password = document.getElementById("password") //turns password into an object
-        ,repeat_password = document.getElementById("repeat_password"); //turns repeat password into an object
-        
-        function validatePassword(){
-          if(password.value != repeat_password.value) { //if password is not equal to repeat password, say passwords don't match
-            alert("Please make sure passwords match.");
-        response.redirect('public/registration.html') 
-          } 
-        else{
-            response.redirect('Login_Successful') 
-        }
-      
-        }
-          validatePassword();
+   function checkpassword() 
+ {var p=f.password.value;
+ var cp=f.repeat_password.value;
+ if(p==cp) {}
+ else
+ alert("Passwords Don't Match. Please retype")
+ response.redirect("registration.html?"); //If passwords don't match, redirect back to registration html page
+ } 
 </script>
 
 <body>
-            <div>
-                    <form  method="POST" action="" onsubmit=validatePassword() >
-                      <input type="text" name="fullname" size="40" pattern="[a-zA-Z]+[ ]+[a-zA-Z]+" maxlength="30" placeholder="Enter First & Last Name"><br />
-                      <input type="text" name="username" size="40" pattern=".[a-z0-9]{3,10}" required title="Minimum 4 Characters, Maximum 10 Characters, Numbers/Letters Only" placeholder="Enter Username" ><br />
-                      <input type="email" name="email" size="40" placeholder="Enter Email" pattern="[a-z0-9._]+@[a-z0-9]+\.[a-z]{3,}$" required title="Please enter valid email."><br />
-                      <input type="password" id="password" name="password"  size="40" pattern=".{8,}" required title="8 Characters Minimum" placeholder="Enter Password"><br />
-                      <input type="password" id="repeat_password" name="repeat_password" size="40" pattern=".{8,}" required title="8 Characters Minimum" placeholder="Repeat Password"><br />
-                   
-                      <input type="submit" value="Submit" id="submit">
-                  </form></div>
+    <div>
+        <form method="POST" action="" onsubmit=validatePassword()>
+            <input type="text" name="fullname" size="40" pattern="[a-zA-Z]+[ ]+[a-zA-Z]+" maxlength="30"
+                placeholder="Enter First & Last Name"><br />
+            <input type="text" name="username" size="40" pattern=".[a-z0-9]{3,10}" required
+                title="Minimum 4 Characters, Maximum 10 Characters, Numbers/Letters Only"
+                placeholder="Enter Username"><br />
+            <input type="email" name="email" size="40" placeholder="Enter Email"
+                pattern="[a-z0-9._]+@[a-z0-9]+\.[a-z]{3,}$" required title="Please enter valid email."><br />
+            <input type="password" id="password" name="password" size="40" pattern=".{8,}" required
+                title="8 Characters Minimum" placeholder="Enter Password"><br />
+            <input type="password" id="repeat_password" name="repeat_password" size="40" pattern=".{8,}" required
+                title="8 Characters Minimum" placeholder="Repeat Password"><br />
+
+            <input type="submit" value="submit" id="submit">
+        </form>
+    </div>
 </body>
 
 </html>
