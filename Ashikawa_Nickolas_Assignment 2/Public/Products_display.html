@@ -18,7 +18,6 @@
 </style>
 
 <body>
-    <form name="product_selection_form" action="./login.html" method="GET">
         <header>
             <h1>Laptop Shop</h1>
             <link href="products_style.css" rel="stylesheet">
@@ -29,7 +28,7 @@
         </div>
         <div>
 
-            <main>
+            <main id="products_main_display">
                 <script>
                     for (i = 0; i < products.length; i++) {
                         document.write(`
@@ -49,7 +48,7 @@
         </div>
         <footer>
 
-            <input type="submit" value="Submit Purchase" name="Purchase_submit">
+            <input type="submit" value="Purchase" name="purchase_submit">
         </footer>
     </form>
 </body>
@@ -75,7 +74,7 @@
     window.onload = function () {
         let params = (new URL(document.location)).searchParams; // get the query string which has the form data
         // form was submitted so check that quantities are valid then redirect to invoice if ok.
-        if (params.has('submitPurchase')) {
+        if (params.has('purchase_submit')) {
             has_errors = false; // assume quantities are valid from the start
             total_qty = 0; // need to check if something was selected so we will look if the total > 0
             //For every product in the array, write the product number, display its image and name, and list price
@@ -98,6 +97,8 @@
                 alert("Please select some quantities!")
             } else {
                 response.redirect('/login.html')
+                window.location = `./Invoice.html${document.location.search}`; //Redirects itself
+                window.stop;
             }
         }
     }

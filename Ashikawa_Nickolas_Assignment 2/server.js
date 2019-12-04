@@ -1,7 +1,7 @@
 //Creating a server via express//
 const querystring = require('querystring');
 var products = require("./Public/product_data.js"); //get the data from product_data.js
-var filemame = 'user_data.json'
+var filename = 'user_data.json'
 var express = require('express'); //Server requires express to run//
 var app = express(); //Run the express function and start express//
 var myParser = require("body-parser");
@@ -13,7 +13,7 @@ app.use(myParser.urlencoded({ extended: true }));
 
 //Sourced from Mark Chou//
 //Go to invoice if quantity values are good, if not, redirect back to order page//
-app.get("/login.html", function (request, response) {
+app.get("/process_page", function (request, response) {
     //check for valid quantities//
     //look up request.query//
     laptopquantity = request.query;
@@ -23,24 +23,20 @@ app.get("/login.html", function (request, response) {
         has_errors = false;
         total_qty = 0;
         for (i = 0; i < products.length; i++) {
-            has_errors = false;
-            total_qty = 0;
-            for (i = 0; i < products.length; i++) {
-                if (typeof params[`quantity${i}`] != 'undefined') {
-                    a_qty = params[`quantity${i}`];
-                    total_qty += a_qty;
-                    if (!isNonNegInt(a_qty)) {
-                        has_errors = true;
-                    }
+            if (typeof params[`quantity${i}`] != 'undefined') {
+                a_qty = params[`quantity${i}`];
+                total_qty += a_qty;
+                if (!isNonNegInt(a_qty)) {
+                    has_errors = true;
                 }
             }
+        }
+        qstr = querystring.stringify(request.query);
+        if (has_errors || total_qty == 0) {
             qstr = querystring.stringify(request.query);
-            if (has_errors || total_qty == 0) {
-                qstr = querystring.stringify(request.query);
-                response.redirect("Products_display.html?" + qstr);
-            } else {
-                response.redirect("/login.html?" + qstr);
-            }
+            response.redirect("Products_display.html?" + qstr);
+        } else {
+            response.redirect("login.html?" + qstr);
         }
     }
 });
@@ -60,30 +56,30 @@ if (fs.existsSync(filename)) {
     stats = fs.statSync(filename) //gets stats from file
 
     data = fs.readFileSync(filename, 'UTF-8');
-    console.log(typeof data);
     users_reg_data = JSON.parse(data);
 }
 
+//To login page//
 app.get("/login.html", function (request, response) {
+    //Request to have access to login
     str = `
      <html lang="en">
-     
+     <link href="products_style.css" rel="stylesheet">
      <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <meta http-equiv="X-UA-Compatible" content="ie-edge">
      <title>Login Page</title>
      
-     <link href="products_style.css" rel="stylesheet">
      </head>
      <body>
 
     <h1>Laptop Shop Login Page!</h1>
     <p>To buy my products you must<br> login or register as a member</p>
-    <form name="loginform" method="POST">
+    <form action="" method="POST">
         <input type="text" name="username" size="40" placeholder="Enter Username"><br />
         <input type="password" name="password" size="40" placeholder="Enter Password"><br />
-        <input type="submit" value="login" id="submit">
+        <input type="submit" value="Submit" id="submit">
     </form>
 </body>
 
@@ -92,7 +88,7 @@ app.get("/login.html", function (request, response) {
 <body>
     <div>
         <form action="./registration.html">
-            <input type="submit" value="Register" id="regpage" name="Register_Here">
+            <input type="submit" value="Register" id="Register_Here" name="Register_Here">
         </form>
 
     </div>
@@ -118,25 +114,21 @@ app.post("/login.html", function (request, response) {
     }
 });
 
-app.get("/registration.html", function (request, response){
-    
-    str= `
-    <html lang="en">
+app.get("/registration.html", function (request, response) {
 
+    str = `
+    <html lang="en">
+<script>src="server.js"</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Registration Page</title>
-    <script>
-    //Sets link with invoice data to pass to next page
-    reg_form.action = "/registration" + document.location.search;
-</script>
 </head>
 
 <body>
 
-    <form id="reg_form" method="POST" name="Registration_Form">
+    <form action="" onsubmit=validatePassword() method="POST" name="Registration_Form">
         <table>
             <tr>
                 <th colspan="2">Registration Form</th>
@@ -175,22 +167,19 @@ app.get("/registration.html", function (request, response){
 </body>
 
 </html>`;
-response.send(str);
+    response.send(str);
 });
 
 app.post("/registration.html", function (request, response) {
     console.log(laptopquantity);
     the_username = request.body.username;
-    console.log(the_username,"Username is", typeof (users_reg_data[the_username]));
-
     username = request.body.username;
-
     errors = [];
 
     if (typeof users_reg_data[username] != 'undefined') {
         errors.push("Username is already taken");
     }
-   
+
     console.log(errors, users_reg_data);
 
     if (errors.length == 0) {
@@ -198,6 +187,7 @@ app.post("/registration.html", function (request, response) {
         users_reg_data[username].username = request.body.username
         users_reg_data[username].password = request.body.password;
         users_reg_data[username].email = request.body.email;
+        users_reg_data[username].fullname = request.body.fullname;
 
         fs.writeFileSync(filemame, JSON.stringify(users_reg_data));
         theQuantQuerystring = qs.stringify(laptopquantity);
@@ -207,12 +197,12 @@ app.post("/registration.html", function (request, response) {
     }
 });
 
-    app.all('*', function (request, response, next) {
-        console.log(request.method + ' to ' + request.path)
-        next();
-    });
+app.all('*', function (request, response, next) {
+    console.log(request.method + ' to ' + request.path)
+    next();
+});
 
-    app.use(express.static('./Public')); //Creates a static server using express from the public folder
-    app.listen(8080, () => console.log(`listening on port 8080`))
+app.use(express.static('./Public')); //Creates a static server using express from the public folder
+app.listen(8080, () => console.log(`listening on port 8080`))
 
-  
+

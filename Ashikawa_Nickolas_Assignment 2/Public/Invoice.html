@@ -3,7 +3,6 @@
   //referenced from assignment 1 examples
   let params = (new URL(document.location)).searchParams;
   // processing the invoice to create the form from the data entered
-  if (params.has('Purchase_submit')) {
     if (params.has('username')) {
     }
     else {
@@ -12,6 +11,7 @@
       window.stop();
     }
     var quantities = [];
+    if(params.has('purchase_submit')){
     for (i = 0; i < products.length; i++) {
       if (params.has(`quantity${i}`)) {
         a_qty = params.get(`quantity${i}`);

@@ -1,20 +1,21 @@
 <html lang="en">
+<script>src = "server.js"</script>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Registration Page</title>
-    <script>src="server.js"</script>
 </head>
 <script>
-   function checkpassword() 
- {var p=f.password.value;
- var cp=f.repeat_password.value;
- if(p==cp) {}
- else
- alert("Passwords Don't Match. Please retype")
- response.redirect("registration.html?"); //If passwords don't match, redirect back to registration html page
- } 
+    function checkpassword() {
+        var p = f.password.value;
+        var cp = f.repeat_password.value;
+        if (p == cp) { }
+        else
+            alert("Passwords Don't Match. Please retype")
+        response.redirect("registration.html?"); //If passwords don't match, redirect back to registration html page
+    } 
 </script>
 
 <body>
@@ -32,7 +33,7 @@
             <input type="password" id="repeat_password" name="repeat_password" size="40" pattern=".{8,}" required
                 title="8 Characters Minimum" placeholder="Repeat Password"><br />
 
-            <input type="submit" value="submit" id="submit">
+            <input type="submit" value="Submit" id="submit">
         </form>
     </div>
 </body>
