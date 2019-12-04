@@ -32,5 +32,5 @@ var products = [
 //If the module is not undefined, have the module export the data from the product_data array
 //From Assignment1_Design_Examples > Asssignment1_2file > product_data.js 
 if(typeof module != 'undefined') { //if the type of the module is defined
-    module.exports.products = products; //export the product_data
+    exports.products = products; //export the product_data
   }

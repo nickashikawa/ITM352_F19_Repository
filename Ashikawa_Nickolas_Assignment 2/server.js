@@ -13,7 +13,7 @@ app.use(myParser.urlencoded({ extended: true }));
 
 //Sourced from Mark Chou//
 //Go to invoice if quantity values are good, if not, redirect back to order page//
-app.get("/process_page", function (request, response) {
+app.get("/login.html", function (request, response) {
     //check for valid quantities//
     //look up request.query//
     laptopquantity = request.query;
@@ -98,7 +98,6 @@ app.get("/login.html", function (request, response) {
 `;
     response.send(str);
 });
-
 app.post("/login.html", function (request, response) {
     console.log(laptopquantity);
     the_username = request.body.username
@@ -197,12 +196,11 @@ app.post("/registration.html", function (request, response) {
     }
 });
 
-app.all('*', function (request, response, next) {
-    console.log(request.method + ' to ' + request.path)
+app.all("*", function(request, response, next) {
+    console.log(request.method, request.path)
     next();
 });
 
 app.use(express.static('./Public')); //Creates a static server using express from the public folder
 app.listen(8080, () => console.log(`listening on port 8080`))
-
 
