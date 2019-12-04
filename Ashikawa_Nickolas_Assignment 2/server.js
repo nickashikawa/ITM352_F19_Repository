@@ -8,8 +8,16 @@ var myParser = require("body-parser");
 var qs = require('querystring');
 var qstr = {};
 var laptopquantity = {};
+var data = require("./Public/product_data")
 
 app.use(myParser.urlencoded({ extended: true }));
+app.post("/process_form", function (request, response) {
+    let POST = request.body;
+    if (typeof POST['quantity_textbox'] != 'undefined') {
+     displayPurchase(POST, response);
+     
+ } 
+ });
 
 //Sourced from Mark Chou//
 //Go to invoice if quantity values are good, if not, redirect back to order page//
@@ -98,7 +106,7 @@ app.get("/login.html", function (request, response) {
 `;
     response.send(str);
 });
-app.post("/login.html", function (request, response) {
+app.post("/login", function (request, response) {
     console.log(laptopquantity);
     the_username = request.body.username
     if (typeof users_reg_data[the_username] != 'undefined') {
@@ -197,7 +205,7 @@ app.post("/registration.html", function (request, response) {
 });
 
 app.all("*", function(request, response, next) {
-    console.log(request.method, request.path)
+    console.log(request.method + 'to' + request.path)
     next();
 });
 
