@@ -1,214 +1,173 @@
 //Creating a server via express//
 const querystring = require('querystring');
-var products = require("./Public/product_data.js"); //get the data from product_data.js
-var filename = 'user_data.json'
+const product_data = require("./Public/product_data.js"); //get the data from product_data.js
 var express = require('express'); //Server requires express to run//
 var app = express(); //Run the express function and start express//
 var myParser = require("body-parser");
-var qs = require('querystring');
-var qstr = {};
-var laptopquantity = {};
-var data = require("./Public/product_data")
 
 app.use(myParser.urlencoded({ extended: true }));
-app.post("/process_form", function (request, response) {
-    let POST = request.body;
-    if (typeof POST['quantity_textbox'] != 'undefined') {
-     displayPurchase(POST, response);
-     
- } 
- });
 
-//Sourced from Mark Chou//
-//Go to invoice if quantity values are good, if not, redirect back to order page//
-app.get("/login.html", function (request, response) {
-    //check for valid quantities//
-    //look up request.query//
-    laptopquantity = request.query;
-    params = request.query;
-    console.log(params);
-    if (typeof params['purchase_submit'] != 'undefined') {
-        has_errors = false;
-        total_qty = 0;
-        for (i = 0; i < products.length; i++) {
-            if (typeof params[`quantity${i}`] != 'undefined') {
-                a_qty = params[`quantity${i}`];
-                total_qty += a_qty;
-                if (!isNonNegInt(a_qty)) {
-                    has_errors = true;
-                }
-            }
-        }
-        qstr = querystring.stringify(request.query);
-        if (has_errors || total_qty == 0) {
-            qstr = querystring.stringify(request.query);
-            response.redirect("Products_display.html?" + qstr);
-        } else {
-            response.redirect("login.html?" + qstr);
-        }
-    }
-});
-
-function isNonNegInt(q, returnErrors = false) {
-    errors = []; // assume that quantity data is valid 
-    if (q == "") { q = 0; }
-    if (Number(q) != q) errors.push('Not a number!'); //check if value is a number
-    if (q < 0) errors.push('Negative value!'); //check if value is a positive number
-    if (parseInt(q) != q) errors.push('Not an integer!'); //check if value is a whole number
-    return returnErrors ? errors : (errors.length == 0);
-}
-
-fs = require('fs');
+var filename = 'user_data.json'
 
 if (fs.existsSync(filename)) {
     stats = fs.statSync(filename) //gets stats from file
-
+    console.log(filename + 'has' + stats.soze + 'characters');
     data = fs.readFileSync(filename, 'UTF-8');
     users_reg_data = JSON.parse(data);
+} else { 
+    console.log(filename + 'does not exist!');
 }
+//Sourced from Mark Chou//
+//Go to invoice if quantity values are good, if not, redirect back to order page//
 
-//To login page//
-app.get("/login.html", function (request, response) {
-    //Request to have access to login
-    str = `
-     <html lang="en">
-     <link href="products_style.css" rel="stylesheet">
-     <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <meta http-equiv="X-UA-Compatible" content="ie-edge">
-     <title>Login Page</title>
-     
-     </head>
-     <body>
-
-    <h1>Laptop Shop Login Page!</h1>
-    <p>To buy my products you must<br> login or register as a member</p>
-    <form action="" method="POST">
-        <input type="text" name="username" size="40" placeholder="Enter Username"><br />
-        <input type="password" name="password" size="40" placeholder="Enter Password"><br />
-        <input type="submit" value="Submit" id="submit">
-    </form>
-</body>
-
-<h2>Register Here!</h2>
-
-<body>
-    <div>
-        <form action="./registration.html">
-            <input type="submit" value="Register" id="Register_Here" name="Register_Here">
-        </form>
-
-    </div>
-
-</body>
-</html>
-`;
-    response.send(str);
-});
-app.post("/login", function (request, response) {
-    console.log(laptopquantity);
-    the_username = request.body.username
+app.post("/login.html", function (req, res) {
+    var LogError = [];
+    console.log(req.body);
+    the_username = req.body.username.toLowerCase();
     if (typeof users_reg_data[the_username] != 'undefined') {
         //Asking object if it has matching username, if it doesnt itll be undefined.
-        if (users_reg_data[the_username].password == request.body.password) {
-            theQuantQuerystring = qs.stringify(laptopquantity);
-            response.redirect('/Invoice.html?' + theQuantQuerystring + `&username=${the_username}`);
+        if (users_reg_data[the_username].password == req.body.password) {
+            req.query.username = the_username;
+            console.log(users_reg_data[req.query.username].name);
+            req.query.name = users_reg_data[req.query.username].name
+            res.redirect('/Invoice.html?' + querystring.stringify(req.query));
+            return;
             //Redirect them to invoice here if they logged in correctly
         } else {
-            response.redirect('/login.html?');
+            LogError.push = ('Invalid Password');
+      console.log(LogError);
+      req.query.username= the_username;
+      req.query.password=req.body.password;
+      req.query.LogError=LogError.join(';');
         }
     }
+    else {
+        LogError.push = ('Invalid Username');
+        console.log(LogError);
+        req.query.username= the_username;
+        req.query.password=req.body.password;
+        req.query.LogError=LogError.join(';');
+    }
+    res.redirect('/login.html?' + querystring.stringify(req.query));
 });
 
-app.get("/registration.html", function (request, response) {
+app.post("/registration.html", function (req, res) {
+    qstr = req.body
+    console.log(qstr);
+    var errors = [];
 
-    str = `
-    <html lang="en">
-<script>src="server.js"</script>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Registration Page</title>
-</head>
-
-<body>
-
-    <form action="" onsubmit=validatePassword() method="POST" name="Registration_Form">
-        <table>
-            <tr>
-                <th colspan="2">Registration Form</th>
-            </tr>
-            <tr>
-                <td><label for="Username">Username:</label></td>
-                <td><input type="text" name="Username" value="" id="Username"></td>
-            </tr>
-            <tr>
-                <td><label for="Name">First Name:</label></td>
-                <td><input type="text" name="Name" value="" id="Name"></td>
-            </tr>
-            <tr>
-                <td><label for="Name">Last Name:</label></td>
-                <td><input type="text" name="Name" value="" id="Name"></td>
-            </tr>
-            <tr>
-                <td><label for="Password">Password</label></td>
-                <td><input type="password" name="Pass" value="" id="Password"></td>
-            </tr>
-            <tr>
-                <td><label for="ConfirmPass">Confirm Password:</label></td>
-                <td><input type="password" name="ConfirmPass" value="" id="ConfirmPass"></td>
-            </tr>
-            <tr>
-                <td><label for="Email">Email:</label></td>
-                <td><input type="text" name="Email" value="" id="Email"></td>
-            </tr>
-            <tr>
-                <td colspan="2" id="submit_reg"><input type="submit" name="submit" value="Register"></td>
-            </tr>
-
-        </table>
-
-    </form>
-</body>
-
-</html>`;
-    response.send(str);
-});
-
-app.post("/registration.html", function (request, response) {
-    console.log(laptopquantity);
-    the_username = request.body.username;
-    username = request.body.username;
-    errors = [];
-
-    if (typeof users_reg_data[username] != 'undefined') {
-        errors.push("Username is already taken");
+    if (/^[A-Za-z]+$/.test(req.body.name)) {
+    }
+    else {
+      errors.push('Use Letters Only for Full Name')
+    }
+    // validating name
+    if (req.body.name == "") {
+      errors.push('Invalid Full Name');
+    }
+    // length of full name is less than 30
+    if ((req.body.name.length > 30)) {
+      errors.push('Full Name Too Long')
     }
 
-    console.log(errors, users_reg_data);
+    var reguser = req.body.username.toLowerCase(); 
+    if (typeof users_reg_data[reguser] != 'undefined') { 
+      errors.push('Username taken')
+    }
 
+    if (/^[0-9a-zA-Z]+$/.test(req.body.username)) {
+    }
+    else {
+      errors.push('Letters And Numbers Only for Username')
+    }
+  
+    //password is min 6 characters long 
+    if ((req.body.password.length < 6)) {
+      errors.push('Password Too Short')
+    }
+    // check to see if passwords match
+    if (req.body.password !== req.body.confirmpsw) { 
+      errors.push('Password Not a Match')
+    }
     if (errors.length == 0) {
-        users_reg_data[username] = {};
-        users_reg_data[username].username = request.body.username
-        users_reg_data[username].password = request.body.password;
-        users_reg_data[username].email = request.body.email;
-        users_reg_data[username].fullname = request.body.fullname;
+       console.log('none');
+       req.query.username = reguser;
+       req.query.name = req.body.name;
+       res.redirect('./Invoice.html?' + querystring.stringify(req.query))
+    }
+    if (errors.length > 0) {
+        console.log(errors)
+        req.query.name = req.body.name;
+        req.query.username = req.body.username;
+        req.query.password = req.body.password;
+        req.query.confirmpsw = req.body.confirmpsw;
+        req.query.email = req.body.email;
 
-        fs.writeFileSync(filemame, JSON.stringify(users_reg_data));
-        theQuantQuerystring = qs.stringify(laptopquantity);
-        response.redirect("/Invoice.html?" + theQuantQuerystring + `&username=${the_username}`);
-    } else {
-        response.redirect('/registration.html?' + 'try again'); //if there are errors, send back to registration page to retype
+        req.query.errors = errors.join(';');
+        res.redirect('registration.html?' + querystring.stringify(req.query))
     }
 });
 
-app.all("*", function(request, response, next) {
-    console.log(request.method + 'to' + request.path)
-    next();
+app.get("/purchase", function (req, res, next) {
+    console.log(Date.now() + ': Purchase made from ip' + req.ip + 'data:' + JSON.stringify(req.query));
+    //check for valid quantities//
+    let GET = req.query;
+    console.log(GET);
+    var hasValidQuantities = true;
+    var hasPurchases = false;
+    for (i = 0; i < products_data.length; i++) {
+        q = GET['quantity_textbox' + i];
+        if (isNonNegInt(q) == false) {
+            hasValidQuantities = false;
+        }
+    if (q>0) {
+        hasPurchases = true;
+    }
+    console.log(hasValidQuantities, hasPurchases);
+}
+qString = querystring.stringify(GET); //stringing the query together
+  if (hasValidQuantities == true && hasPurchases == true) { // if both hasValidQuantities and hasPurchases are true
+    res.redirect('./login.html?' + querystring.stringify(req.query)); // redirect to the invoice page with the query entered in the form
+  } else {    // if either hasValidQuantities or hasPurchases is false
+    req.query["hasValidQuantities"] = hasValidQuantities; // request the query for hasValidQuantities
+    req.query["hasPurchases"] = hasPurchases; // request the query for hasPurchases
+    console.log(req.query); // log the query into the console
+    res.redirect('./form.html?' + querystring.stringify(req.query)); // redirect to the form again, keeping the query that they wrote
+  }
+
+
 });
 
 app.use(express.static('./Public')); //Creates a static server using express from the public folder
-app.listen(8080, () => console.log(`listening on port 8080`))
 
+var listener = app.listen(8080, () => {console.log(`listening on port ` + listener.address().port) });
+
+function checkQuantityTextbox() { 
+    errs_array = isNonNegInt(quantity_textbox.value, true); 
+      qty_textbox_message.innerHTML = errs_array.join(','); 
+  }
+
+function isNonNegInt(q, returnErrors = false) { 
+    errors = [];
+    if (q == '') q = 0; 
+    if (Number(q) != q) errors.push('Not a number!'); 
+    if (q < 0) errors.push('Negative value!'); 
+    if (parseInt(q) != q) errors.push('Not an integer!'); 
+    return returnErrors ? errors : (errors.length == 0); 
+  }
+
+
+function process_form(GET, response) { 
+    if (typeof GET['purchase'] != 'undefined') { 
+      for (i in products) { 
+        let q = GET[`quantity_textbox${i}`]; 
+        if (isNonNegInt(q)) { 
+          receipt += eval('`' + contents + '`'); 
+        } else { 
+          receipt += `<h3><font color="red">${q} is not a valid quantity for ${model}!</font></h3>`; //tell the user it is not a valid quantity
+        }
+      }
+      response.send(receipt); 
+      response.end(); 
+    }
+  }
