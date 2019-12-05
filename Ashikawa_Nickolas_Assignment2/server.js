@@ -72,7 +72,7 @@ app.post("/register.html", function (req, res) {
       errors.push('Full Name Too Long')
     }
     // length of full name is between 0 and 25 
-  if ((req.body.name.length > 25 && req.body.name.length <0)) {
+  if ((req.body.fulname.length > 25 && req.body.name.length <0)) {
     errors.push('Full Name Too Long')
   }
 
