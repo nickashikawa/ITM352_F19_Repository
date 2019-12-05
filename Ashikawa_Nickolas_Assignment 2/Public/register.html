@@ -1,7 +1,18 @@
 <html lang="en">
-<script>src = "server.js"</script>
 
 <head>
+    <script>
+        let params = (new URL(document.location)).searchParams;
+
+        window.onload = function () { // creating the function for window.onload
+            //if there are errors in the registration data , tell the user
+            if (params.has('errors')) {
+
+                console.log("invalid");
+                alert('Fix the following errors: \n' + params.get('errors'));
+            }
+        }    
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -11,16 +22,16 @@
     function checkpassword() {
         var p = f.password.value;
         var cp = f.repeat_password.value;
-        if (p == cp) {}
+        if (p == cp) { }
         else
             alert("Passwords Don't Match. Please retype")
-        response.redirect("registration.html?"); //If passwords don't match, redirect back to registration html page
+        response.redirect("register.html?"); //If passwords don't match, redirect back to registration html page
     } 
 </script>
 
 <body>
     <div>
-        <form method="POST" action="" onsubmit=validatePassword()>
+        <form method="POST" action="" name="Register">
             <input type="text" name="fullname" size="40" pattern="[a-zA-Z]+[ ]+[a-zA-Z]+" maxlength="30"
                 placeholder="Enter First & Last Name"><br />
             <input type="text" name="username" size="40" pattern=".[a-z0-9]{3,10}" required
@@ -33,8 +44,11 @@
             <input type="password" id="repeat_password" name="repeat_password" size="40" pattern=".{8,}" required
                 title="8 Characters Minimum" placeholder="Repeat Password"><br />
 
-            <input type="submit" value="Submit" id="submit">
+            <input type="submit" value="Register" id="submit">
         </form>
+        <script>
+        Register.action = "./register.html" + document.location.search;
+        </script>
     </div>
 </body>
 
