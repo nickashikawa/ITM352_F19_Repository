@@ -7,6 +7,7 @@ var express = require('express'); //Server requires express to run//
 var app = express(); //Run the express function and start express//
 var myParser = require('body-parser');
 
+
 app.use(myParser.urlencoded({ extended: true }));
 
 var filename = 'user_data.json'
@@ -40,6 +41,7 @@ app.post("/login.html", function (req, res) {
             LogError.push = ('Invalid Password');
       console.log(LogError);
       req.query.username= the_username;
+      req.query.password= req.body.password;
       req.query.LogError=LogError.join(';');
         }
     } else {
