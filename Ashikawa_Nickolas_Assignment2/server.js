@@ -71,6 +71,10 @@ app.post("/register.html", function (req, res) {
     if ((req.body.name.length > 30)) {
       errors.push('Full Name Too Long')
     }
+    // length of full name is between 0 and 25 
+  if ((req.body.name.length > 25 && req.body.name.length <0)) {
+    errors.push('Full Name Too Long')
+  }
 
     var reguser = req.body.username.toLowerCase(); 
     if (typeof users_reg_data[reguser] != 'undefined') { 
@@ -84,7 +88,7 @@ app.post("/register.html", function (req, res) {
     }
   
     //password is min 6 characters long 
-    if ((req.body.password.length < 6)) {
+    if ((req.body.password.length < 6 && req.body.username.length > 20)) {
       errors.push('Password Too Short')
     }
     // check to see if passwords match
@@ -112,7 +116,6 @@ app.post("/register.html", function (req, res) {
 });
 
 app.get("/purchase", function (req, res, next) {
-    console.log(Date.now() + ': Purchase made from ip' + req.ip + 'data:' + JSON.stringify(req.query));
     //check for valid quantities//
     let GET = req.query;
     console.log(GET);
