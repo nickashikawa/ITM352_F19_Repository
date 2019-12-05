@@ -18,21 +18,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Registration Page</title>
 </head>
-<script>
-    function checkpassword() {
-        var p = f.password.value;
-        var cp = f.repeat_password.value;
-        if (p == cp) { }
-        else
-            alert("Passwords Don't Match. Please retype")
-        response.redirect("register.html?"); //If passwords don't match, redirect back to registration html page
-    } 
-</script>
 
 <body>
     <div>
         <form method="POST" action="" name="Register">
-            <input type="text" name="fullname" size="40" pattern="[a-zA-Z]+[ ]+[a-zA-Z]+" 
+            <input type="text" name="fullname" size="40" pattern="[a-zA-Z]+[ ]+[a-zA-Z]+"
                 placeholder="Enter First & Last Name"><br />
             <input type="text" name="username" size="40" pattern=".[a-z0-9]{3,10}" required
                 title="Minimum 4 Characters, Maximum 10 Characters, Numbers/Letters Only"
@@ -47,7 +37,7 @@
             <input type="submit" value="Register" id="submit">
         </form>
         <script>
-        Register.action = "./register.html" + document.location.search;
+            Register.action = "./register.html" + document.location.search;
         </script>
     </div>
 </body>

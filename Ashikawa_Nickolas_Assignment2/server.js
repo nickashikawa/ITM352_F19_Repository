@@ -68,11 +68,11 @@ app.post("/register.html", function (req, res) {
       errors.push('Invalid Full Name');
     }
     // length of full name is less than 30
-    if ((req.body.name.length > 30)) {
+    if ((req.body.fullname.length > 30)) {
       errors.push('Full Name Too Long')
     }
     // length of full name is between 0 and 25 
-  if ((req.body.fulname.length > 25 && req.body.name.length <0)) {
+  if ((req.body.fullname.length > 25 && req.body.fullname.length <0)) {
     errors.push('Full Name Too Long')
   }
 
@@ -87,12 +87,12 @@ app.post("/register.html", function (req, res) {
       errors.push('Letters And Numbers Only for Username')
     }
   
-    //password is min 6 characters long 
-    if ((req.body.password.length < 6 && req.body.username.length > 20)) {
+    //password is min 8 characters long 
+    if ((req.body.password.length < 8 && req.body.username.length > 20)) {
       errors.push('Password Too Short')
     }
     // check to see if passwords match
-    if (req.body.password !== req.body.confirmpsw) { 
+    if (req.body.password !== req.body.repeat_password) { 
       errors.push('Password Not a Match')
     }
 
@@ -107,7 +107,7 @@ app.post("/register.html", function (req, res) {
         req.query.name = req.body.name;
         req.query.username = req.body.username;
         req.query.password = req.body.password;
-        req.query.confirmpsw = req.body.confirmpsw;
+        req.query.repeat_password = req.body.repeat_password;
         req.query.email = req.body.email;
 
         req.query.errors = errors.join(';');
