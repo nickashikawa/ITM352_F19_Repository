@@ -1,4 +1,3 @@
-// From Ryan Miller
 var express = require('express');
 var app = express();
 var myParser = require("body-parser");
