@@ -38,7 +38,7 @@ class Tetris
 
     draw()
     {
-        this.context.fillStyle = '#000';
+        this.context.fillStyle = '#FFFFFF';
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.drawMatrix(this.arena.matrix, {x: 0, y: 0});
