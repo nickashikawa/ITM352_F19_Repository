@@ -23,9 +23,9 @@
 <body>
 
     <h1>Tetris Login</h1>
-    <p>To play you must be a member<br> login or register as a member</p>
+    <p>To play you must be a member<br> Login or Register as Player 1</p>
     <link rel="stylesheet" href="login_style.css">
-    <form name="login" method="POST">
+    <form name="login for player 1" method="POST">
         <div class="container">
             <input type="text" name="username" id="username" size="40" placeholder="Enter Username" required><br />
             <input type="password" name="password" size="40" placeholder="Enter Password" onkeyup="" required><br />
@@ -35,6 +35,18 @@
     <script>
         login.action = "./login.html" + document.location.search;
     </script>
+     <p>To play you must be a member<br> Login or Register as Player 2</p>
+     <link rel="stylesheet" href="login_style.css">
+     <form name="login for player 2" method="POST">
+         <div class="container">
+             <input type="text" name="username" id="username" size="40" placeholder="Enter Username" required><br />
+             <input type="password" name="password" size="40" placeholder="Enter Password" onkeyup="" required><br />
+             <input type="submit" value="Login" name="login"><br />
+         </div>
+     </form>
+     <script>
+         login.action = "./login.html" + document.location.search;
+     </script>
 </body>
 
 
