@@ -1,11 +1,6 @@
 <html>
 
 <head>
-    <div id="score"></div>
-    <canvas id="tetris" width="240" height="400" style="background: white; margin: 20px;"></canvas>
-    <form name="gridForm" style="display: block; margin-top: 7px;"></form>
-    <script src="tetris.js"></script>
-    <title>Tetris</title>
     <style>
         body {
             color: #fff;
@@ -20,11 +15,58 @@
             /* Stretching image to fit whole page */
         }
 
+        html {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-around;
+            background-position: center;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .player {
+            flex: 1 1 auto;
+        }
+
         canvas {
             border: solid .2em #fff;
             height: 90vh;
         }
+
+        #startBtn {
+            border: none;
+            background: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+        }
+
+        #container {
+            display: inline-block;
+            position: relative;
+        }
     </style>
+
+<body>
+    <div id="container">
+        <button type="button" id="startBtn" onclick="">
+            <a href="./login.html"> <img
+                    src="https://1.bp.blogspot.com/-fVAKH-3TLuo/W5onDDHje0I/AAAAAAAAB4I/q2ooE6GuzQkS80dtw1JILXjFWdfQ3IKkwCLcBGAs/s1600/breaoutplay.png"></a>
+        </button>
+        <canvas id="tetris" width="600" height="550"></canvas>
+    </div>
+
+    <script>
+
+        var startBtn = document.getElementById('startBtn');
+
+    </script>
+</body>
 </head>
 </body>
 
