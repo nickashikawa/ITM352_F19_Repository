@@ -21,7 +21,9 @@
 </head>
 <style> 
     body {
-        background-image: url("./Background_Image.jpg"); /*Background Image*/
+        background-image: url("./Tetris_Background_Image.jpeg"); /*Background Image*/
+        background-repeat: no-repeat;
+        background-size: cover;
     }
 </style>
 
@@ -31,18 +33,6 @@
     <p>To play you must be a member<br> Login or Register as Player 1</p> <!--Login for player 1-->
     <link rel="stylesheet" href="login_style.css">
     <form name="login for player 1" method="POST">
-        <div class="container">
-            <input type="text" name="username" id="username" size="40" placeholder="Enter Username" required><br />
-            <input type="password" name="password" size="40" placeholder="Enter Password" onkeyup="" required><br />
-            <input type="submit" value="Login" name="login"><br />
-        </div>
-    </form>
-    <script>
-        login.action = "./login.html" + document.location.search;
-    </script>
-    <p>Login or Register as Player 2</p> <!--Login for player 2-->
-    <link rel="stylesheet" href="login_style.css"> <!--Links to stylesheet-->
-    <form name="login for player 2" method="POST">
         <div class="container">
             <input type="text" name="username" id="username" size="40" placeholder="Enter Username" required><br />
             <input type="password" name="password" size="40" placeholder="Enter Password" onkeyup="" required><br />
