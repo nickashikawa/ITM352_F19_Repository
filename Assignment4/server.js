@@ -90,7 +90,7 @@ app.get("/login.html", function (request, response) {
     response.send(str);
  });
 
-app.post("/login.html", function (request, response) {
+app.post("/login", function (request, response) {
     // Process login form POST and redirect to logged in page if ok, back to login page if not
     console.log(request.body);
     //Diagnostic
