@@ -1,4 +1,9 @@
 html{
     text-align: center;
-    background-image: url("./Tetris_Background.jpg"); /*Background Image*/
+    background-image: url("./Tetris_Background_Image.jpeg"); /*Background Image*/
+}
+img{
+    height: 200px;
+    width: 200px;
+    background-repeat: no-repeat;
 }
