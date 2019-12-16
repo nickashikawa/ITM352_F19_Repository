@@ -1,8 +1,23 @@
 var express = require('express');
 var app = express();
 var myParser = require("body-parser");
+var session = require('express-session');
+
+app.use(session({secret: "ITM352 rocks!"}));
+
+//When a user gets a request set an ID for the user. Everyone gets a different ID.
+app.get("/use_session", function (request, response){
+    response.send(`welcome, your session ID is <sess id> where ${request.session.id}`)
+    ;
+});
+
+
+//When a request it made it tot he server and it has a cookie with that request, this middleware takes that cookie and turns it into an object that can be used.
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
 
 app.use(myParser.urlencoded({ extended: true }));
+
 
 fs = require('fs');
 var filename = 'user_data.json';
@@ -44,10 +59,24 @@ console.log(users_reg_data);
     console.log(filename + ' does not exist!');
 }
 
+//Build cookies key value
+app.get('/set_cookie', function (request, response) {
+response.cookie('myname', 'Kelsey', {maxAge: 5000}).send('cookie set');
+});
+
+//If i have a cookie it will call on it 
+app.get('/use_cookie', function (request, response) {
+    output = "No cookies with my name"
+    if (typeof request.cookies.myname != "undefined"){
+    output = `Welcome to the used cookie page ${request.cookies.myname}`;
+    response.send(output); }
+    });
+
+
 //When we get here we want to have the user registration data already 
 //If server gets a GET request to login it will get this code. 
 
-app.get("/login", function (request, response) {
+app.get("/login.html", function (request, response) {
     // Give a simple login form
     str = `
 <body>
@@ -61,7 +90,7 @@ app.get("/login", function (request, response) {
     response.send(str);
  });
 
-app.post("/login", function (request, response) {
+app.post("/login.html", function (request, response) {
     // Process login form POST and redirect to logged in page if ok, back to login page if not
     console.log(request.body);
     //Diagnostic
@@ -72,7 +101,7 @@ app.post("/login", function (request, response) {
             response.send(the_username + " Logged In!");
             //Redirect them to invoice here if they logged in correctly
         } else {
-response.redirect('/register');
+response.redirect('/login.html');
         }
         //See's if password matches what was typed
     }
@@ -118,7 +147,7 @@ if (errors.length == 0){
 
     fs.writeFileSync(filename, JSON.stringify(users_reg_data));
     
-    response.redirect("/login");
+    response.redirect("/login.html");
 } else {
     response.redirect("/register");
 }
@@ -127,4 +156,6 @@ if (errors.length == 0){
 
 
 
-app.listen(8080, () => console.log(`listening on port 8080`));
+ app.use(express.static('./static'));
+
+ var listener = app.listen(8080, () => { console.log('server started listening on port ' + listener.address().port) });
