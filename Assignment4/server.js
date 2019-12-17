@@ -61,10 +61,10 @@ body{
     
     <h2>Register Here!</h2> <!--If not login information user will go to registration page-->  
     <input type="button" name="newuser" value="New User" 
-        onclick="window.location='./Public/register.html' + document.location.search;">
+        onclick="window.location='register.html' + document.location.search;">
    <h2>Play as a Guest Without Login!</h2> <!--Allows user to go straight to the game without login-->
     <input type="button" name="Guest" value="Play as Guest"
-    onclick="window.location='./Public/play_button.html' + document.location.search;">
+    onclick="window.location='play_button.html' + document.location.search;">
   </div>
 </body>
     `;
@@ -79,7 +79,7 @@ app.post("/login", function (request, response) {
     if (typeof users_reg_data[the_username] != 'undefined') {
       //Asking object if it has matching username, if it doesnt itll be undefined.
       if (users_reg_data[the_username].password == request.body.password) {
-        response.redirect('./Public/play_button.html');
+        response.redirect('play_button.html');
         //Redirect them to play button here if they logged in correctly
       } else {
         response.redirect('./server');
@@ -149,5 +149,5 @@ app.post("/register", function (request, response) {
   
   });
 
-app.use(express.static('./static'));
+app.use(express.static('./Public'));
 app.listen(8080, () => console.log(`listening on port 8080`));
