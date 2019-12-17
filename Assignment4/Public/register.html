@@ -1,45 +1,99 @@
 <html lang="en">
 
 <head>
-    <script>
-        let params = (new URL(document.location)).searchParams;
+    <style>
+        html {
+            text-align: center;
+            background-image: url("./Tetris_Background_Image.jpeg");
+            /*Background Image*/
+        }
+        body {
+            height: 50%;
+            display: table;
+            width: 50%;
+        }
+        #signup {
+            vertical-align: middle;
+            background-color: beige;
+        }
+    </style>
 
+
+
+    <script>
+        //refrenced from lab 14
+        //get parameters from user
+        let params = (new URL(document.location)).searchParams;
         window.onload = function () { // creating the function for window.onload
             //if there are errors in the registration data , tell the user
             if (params.has('errors')) {
-
                 console.log("invalid");
                 alert('Fix the following errors: \n' + params.get('errors'));
             }
-        }    
+        }
     </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Registration Page</title>
-    <link rel="stylesheet" href="register_style.css">
+    <title>Document</title>
+
 </head>
 
 <body>
-    <div>
-        <form method="POST" action="" name="Register">
-            <input type="text" name="fullname" size="40" pattern="[a-zA-Z]+[ ]+[a-zA-Z]+"
-                placeholder="Enter First & Last Name"><br />
-            <input type="text" name="username" size="40" pattern=".[a-z0-9]{3,10}" required
-                title="Minimum 4 Characters, Maximum 10 Characters, Numbers/Letters Only"
-                placeholder="Enter Username"><br />
-            <input type="email" name="email" size="40" placeholder="Enter Email"
-                pattern="[a-z0-9._]+@[a-z0-9]+\.[a-z]{3,}$" required title="Please enter valid email."><br />
-            <input type="password" id="password" name="password" size="40" pattern=".{8,}" required
-                title="8 Characters Minimum" placeholder="Enter Password"><br />
-            <input type="password" id="repeat_password" name="repeat_password" size="40" pattern=".{8,}" required
-                title="8 Characters Minimum" placeholder="Repeat Password"><br />
+    <div id="signup">
 
-            <input type="submit" value="Register" id="submit">
+        <form name="Register" method="POST" action="./registerMember">
+
+            <h1>Please fill out the registration form!</h1>
+
+
+            <br>
+            <label for="name"></label> 
+            <input type="text" name="name" maxlength="25" onkeyup="" required placeholder="Enter FirstName">
+            <label for="namelabel" id="namelabel"></label>
+           
+
+            <br>
+            <label for="name"></label> 
+            <input type="text" name="name" maxlength="25" onkeyup="" required placeholder="Enter LastName">
+            <label for="namelabel" id="namelabel"></label>
+           
+
+            <br>
+            <label for="username"></label> 
+            <input type="text" id="username" name="username" onkeyup="" minlength="5" maxlength="20" required
+                placeholder="Enter Username">
+            <label for="userlabel" id="userlabel"></label>
+           
+
+            <br>
+            <label for="password"></label>
+            <input type="password" name="password" onkeyup="" minlength="5" required placeholder="Enter Password">
+            <label for="pswlabel" id="pswlabel"></label>
+            
+
+
+
+            <br>
+            <label for="passConfirm"></label>  
+            <input type="password" name="passConfirm" onkeyup="" required placeholder="Repeat Password">
+            <label for="passConfirmlabel" id="passConfirmlabel"></label>
+          
+
+            <br>
+            <label for="email"></label> 
+            <input type="email" id="email" name="email" onkeyup="" required placeholder="Enter Email">
+            <label for="emaillabel" id="emaillabel"></label>
+           
+
+            <br> <br>
+            <input type="submit" name="submit" value="Register">
+
+
         </form>
-        <script>
-            Register.action = "register.html" + document.location.search;
-        </script>
+
+        </table>
     </div>
 </body>
 
