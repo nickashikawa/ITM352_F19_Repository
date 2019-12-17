@@ -21,7 +21,7 @@ if (fs.existsSync(filename)) {
 }
 
 
-app.get("/login.html", function (request, response) {
+app.get("/login", function (request, response) {
     // Give a simple login form
     str = `
     <body>
@@ -71,7 +71,9 @@ body{
     response.send(str);
 });
 
-app.post("/login.html", function (request, response) {
+app.
+
+app.post("/login", function (request, response) {
     var LogError = [];
     // Process login form POST and redirect to logged in page if ok, back to login page if not
     console.log(request.body);
@@ -155,12 +157,12 @@ app.post("/register", function (request, response) {
 
         fs.writeFileSync(filename, JSON.stringify(users_reg_data));
 
-        response.redirect("/login.html");
+        response.redirect("/login");
     } else {
         response.redirect("/register");
     }
 
 });
 
-app.use(express.static('./Public'));
+app.use(express.static('.'));
 app.listen(8080, () => console.log(`listening on port 8080`));
