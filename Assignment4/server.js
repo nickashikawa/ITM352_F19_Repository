@@ -21,7 +21,7 @@ if (fs.existsSync(filename)) {
 }
 
 
-app.get("login", function (request, response) {
+app.post("login", function (request, response) {
     // Give a simple login form
     str = `
     <body>
@@ -84,7 +84,7 @@ app.post("login", function (request, response) {
             response.redirect('play_button.html');
             //Redirect them to play button here if they logged in correctly
         } else {
-            response.redirect('server');
+            response.redirect('server.js');
         }
 
     }
