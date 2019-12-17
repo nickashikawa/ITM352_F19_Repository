@@ -4,6 +4,10 @@ var express = require('express');
 var app = express();
 var myParser = require("body-parser");
 
+//When a request it made it tot he server and it has a cookie with that request, this middleware takes that cookie and turns it into an object that can be used.
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 app.use(myParser.urlencoded({ extended: true }));
 var filename = 'user_data.json';
 
@@ -56,7 +60,7 @@ body{
     
 </form>
 <script>
-login.action = "/login" + document.location.search;
+login.action = "/index" + document.location.search;
 </script>
     </form>
     
@@ -66,14 +70,14 @@ login.action = "/login" + document.location.search;
         onclick="window.location='./Public/register.html' + document.location.search;">
    <h2>Play as a Guest Without Login!</h2> <!--Allows user to go straight to the game without login-->
     <input type="button" name="Guest" value="Play as Guest"
-    onclick="window.location='./Public/playbutton.html' + document.location.search;">
+    onclick="window.location='./Public/play_button.html' + document.location.search;">
   </div>
 </body>
     `;
     response.send(str);
 });
 
-app.post("/index", function (request, response) {
+app.post("/login", function (request, response) {
     var LogError = [];
     // Process login form POST and redirect to logged in page if ok, back to login page if not
     console.log(request.body);
@@ -85,8 +89,9 @@ app.post("/index", function (request, response) {
             request.query.username = the_username;
             console.log(users_reg_data[request.query.username].name);
             request.query.name = users_reg_data[request.query.username].name
-            response.redirect('./Public/playbutton.html');
+            response.redirect('./Public/play_button.html');
             //Redirect them to play button here if they logged in correctly
+            return;
         } else {
             LogError.push = ('Invalid Password');
             console.log(LogError);
@@ -105,7 +110,7 @@ app.post("/index", function (request, response) {
 
 
 
-app.get("/register", function (request, response) {
+app.get("/Register", function (request, response) {
     // Give a simple register form
     str = `
     <body>
@@ -135,7 +140,7 @@ app.get("/register", function (request, response) {
 
 
 
-app.post("/register", function (request, response) {
+app.post("/Register", function (request, response) {
     // process a simple register form
 
     //Validate: User must not exist already, case sensitive,password certain length with certain characters, email is email
@@ -159,10 +164,10 @@ app.post("/register", function (request, response) {
 
         response.redirect("/index");
     } else {
-        response.redirect("/register");
+        response.redirect("/Register");
     }
 
 });
 
-app.use(express.static('.'));
+app.use(express.static('./Public'));
 app.listen(8080, () => console.log(`listening on port 8080`));
