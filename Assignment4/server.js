@@ -2,8 +2,7 @@ var fs = require('fs');
 var express = require('express');
 var app = express();
 var myParser = require("body-parser");
-const queryString = require('querystring');
-var qs = require('querystring');
+const querystring = require('querystring');
 
 app.use(myParser.urlencoded({ extended: true }));
 var filename = 'user_data.json';
@@ -120,15 +119,14 @@ app.get("/registerUser", function (request, response) {
 
 
 
-app.post("registerMember", function (request, response) {
-    qstr = request.body
-    console.log(queryString);
+app.post("/registerMember", function (request, response) {
+    console.log(querystring);
 
 
     var errors = []; //assume no errors at first,
 
     //name contains only letters 
-    if (/^[A-Za-z]+$/.test(request.body.name)) {
+    if (/^[A-Za-z" "]+$/.test(request.body.name)) {
     }
     else {
         errors.push('Invalid character, only use letters for name!')
@@ -155,7 +153,7 @@ app.post("registerMember", function (request, response) {
     else {
         errors.push('Please only use letters and numbers for username')
     }
-    if ((request.body.username.length < 5 && req.body.username.length > 20)) {
+    if ((request.body.username.length < 5 && request.body.username.length > 20)) {
         errors.push('username must be between 5 and 20 characters')
     }
     //validating password 
@@ -164,7 +162,7 @@ app.post("registerMember", function (request, response) {
         errors.push('Password must be longer than 5 characters')
     }
     // check to see if passwords match
-    if (request.body.password !== req.body.passConfirm) {
+    if (request.body.password !== request.body.passConfirm) {
         errors.push('Passwords do not match!')
     }
 
@@ -175,9 +173,9 @@ app.post("registerMember", function (request, response) {
 
     if (errors.length == 0) {
         console.log('none!');
-        req.query.username = reguser;
+        request.query.username = reguser;
         request.query.name = request.body.name;
-        response.redirect('./playbutton.html?' + querystring.stringify(request.query))
+        response.redirect('./play_button.html?' + querystring.stringify(request.query))
 
         user_data_JSON = fs.readFileSync(filename, 'utf-8');
         user_data = JSON.parse(user_data_JSON);
