@@ -76,7 +76,7 @@ app.get('/use_cookie', function (request, response) {
 //When we get here we want to have the user registration data already 
 //If server gets a GET request to login it will get this code. 
 
-app.get("/login.html", function (request, response) {
+app.get("/login", function (request, response) {
     // Give a simple login form
     str = `
 <body>
@@ -101,7 +101,7 @@ app.post("/login", function (request, response) {
             response.send(the_username + " Logged In!");
             //Redirect them to invoice here if they logged in correctly
         } else {
-response.redirect('/login.html');
+response.redirect('/login');
         }
         //See's if password matches what was typed
     }
@@ -147,7 +147,7 @@ if (errors.length == 0){
 
     fs.writeFileSync(filename, JSON.stringify(users_reg_data));
     
-    response.redirect("/login.html");
+    response.redirect("/login");
 } else {
     response.redirect("/register");
 }
