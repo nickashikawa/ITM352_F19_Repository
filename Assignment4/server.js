@@ -21,7 +21,7 @@ if (fs.existsSync(filename)) {
 }
 
 
-app.get("/login", function (request, response) {
+app.get("/index", function (request, response) {
     // Give a simple login form
     str = `
     <body>
@@ -55,7 +55,9 @@ body{
         <input type="submit" value="Login" name="login"><br />
     
 </form>
-       
+<script>
+login.action = "/login" + document.location.search;
+</script>
     </form>
     
     
@@ -71,9 +73,7 @@ body{
     response.send(str);
 });
 
-app.
-
-app.post("/login", function (request, response) {
+app.post("/index", function (request, response) {
     var LogError = [];
     // Process login form POST and redirect to logged in page if ok, back to login page if not
     console.log(request.body);
@@ -157,7 +157,7 @@ app.post("/register", function (request, response) {
 
         fs.writeFileSync(filename, JSON.stringify(users_reg_data));
 
-        response.redirect("/login");
+        response.redirect("/index");
     } else {
         response.redirect("/register");
     }
