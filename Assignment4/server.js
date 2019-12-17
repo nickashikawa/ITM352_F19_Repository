@@ -21,14 +21,14 @@ if (fs.existsSync(filename)) {
 }
 
 
-app.get("/login", function (request, response) {
+app.get("login", function (request, response) {
     // Give a simple login form
     str = `
     <body>
     <style>
 html{
     text-align: center;
-    background-image:url("./Tetris_Background_Image.jpeg"); /*Background Image*/
+    background-image:url("Tetris_Background_Image.jpeg"); /*Background Image*/
     
 }
 body{
@@ -53,9 +53,11 @@ body{
         <input type="text" name="username" id="username" size="40" placeholder="Enter Username" required><br />
         <input type="password" name="password" size="40" placeholder="Enter Password" onkeyup="" required><br />
         <input type="submit" value="Login" name="login"><br />
-    
+        
 </form>
-       
+<script>
+login.action = "login" + document.location.search;
+</script>
     </form>
     
     
@@ -71,26 +73,26 @@ body{
     response.send(str);
 });
 
-app.post("/login", function (request, response) {
+app.post("login", function (request, response) {
     // Process login form POST and redirect to logged in page if ok, back to login page if not
     console.log(request.body);
     //Diagnostic
     the_username = request.body.username;
     if (typeof users_reg_data[the_username] != 'undefined') {
-      //Asking object if it has matching username, if it doesnt itll be undefined.
-      if (users_reg_data[the_username].password == request.body.password) {
-        response.redirect('play_button.html');
-        //Redirect them to play button here if they logged in correctly
-      } else {
-        response.redirect('./server');
-      }
-     
+        //Asking object if it has matching username, if it doesnt itll be undefined.
+        if (users_reg_data[the_username].password == request.body.password) {
+            response.redirect('play_button.html');
+            //Redirect them to play button here if they logged in correctly
+        } else {
+            response.redirect('server');
+        }
+
     }
-  });
+});
 
 
 
-app.get("/register", function (request, response) {
+app.get("register", function (request, response) {
     // Give a simple register form
     str = `
     <body>
@@ -110,7 +112,7 @@ app.get("/register", function (request, response) {
             <input type="submit" value="Register" id="submit">
         </form>
         <script>
-            Register.action = "./register.html" + document.location.search;
+            Register.action = "register.html" + document.location.search;
         </script>
     </div>
 </body>
@@ -120,34 +122,34 @@ app.get("/register", function (request, response) {
 
 
 
-app.post("/register", function (request, response) {
+app.post("register", function (request, response) {
     // process a simple register form
-  
+
     //Validate: User must not exist already, case sensitive,password certain length with certain characters, email is email
-  
+
     //Save new user to file name (users_reg_data)
     username = request.body.username;
-  
+
     //Checks to see if username already exists
     errors = [];
     //If array stays empty move on
     if (typeof users_reg_data[username] != 'undefined') {
-      errors.push("Username is Taken");
+        errors.push("Username is Taken");
     }
     console.log(errors, users_reg_data);
     if (errors.length == 0) {
-      users_reg_data[username] = {};
-      users_reg_data[username].password = request.body.password;
-      users_reg_data[username].email = request.body.email;
-  
-      fs.writeFileSync(filename, JSON.stringify(users_reg_data));
-  
-      response.redirect("/login");
+        users_reg_data[username] = {};
+        users_reg_data[username].password = request.body.password;
+        users_reg_data[username].email = request.body.email;
+
+        fs.writeFileSync(filename, JSON.stringify(users_reg_data));
+
+        response.redirect("login");
     } else {
-      response.redirect("/register");
+        response.redirect("register");
     }
-  
-  });
+
+});
 
 app.use(express.static('./Public'));
 app.listen(8080, () => console.log(`listening on port 8080`));
