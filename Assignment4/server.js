@@ -73,22 +73,22 @@ login.action = "login" + document.location.search;
     response.send(str);
 });
 
-app.post("login", function (request, response) {
+app.post("/logUserin", function (request, response) {
     // Process login form POST and redirect to logged in page if ok, back to login page if not
     console.log(request.body);
     //Diagnostic
     the_username = request.body.username;
     if (typeof users_reg_data[the_username] != 'undefined') {
-        //Asking object if it has matching username, if it doesnt itll be undefined.
-        if (users_reg_data[the_username].password == request.body.password) {
-            response.redirect('play_button.html');
-            //Redirect them to play button here if they logged in correctly
-        } else {
-            response.redirect('server.js');
-        }
-
+      //Asking object if it has matching username, if it doesnt itll be undefined.
+      if (users_reg_data[the_username].password == request.body.password) {
+        response.redirect('play_button.html');
+        //Redirect them to play button here if they logged in correctly
+      } else {
+        response.redirect('server.js');
+      }
+     
     }
-});
+  });
 
 
 

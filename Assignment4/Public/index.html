@@ -49,7 +49,7 @@
         <p>To play you must be a member<br> Login or Register as Player 1</p>
         <!--Login for player 1-->
 
-        <form name="login for player 1" method="POST">
+        <form name="login for player 1" method="POST" action="./logUserin">
             <div class="container">
                 <input type="text" name="username" id="username" size="40" placeholder="Enter Username" required><br />
                 <input type="password" name="password" size="40" placeholder="Enter Password" onkeyup="" required><br />
@@ -57,19 +57,19 @@
             </div>
         </form>
         <script>
-            login.action = "login.html" + document.location.search;
+            login.action = "/login" + document.location.search;
         </script>
 
 
         <h2>Register Here!</h2>
         <!--If not login information user will go to registration page-->
         <input type="button" name="newuser" value="New User"
-            onclick="window.location='register.html' + document.location.search;">
+            onclick="window.location='./register.html' + document.location.search;">
 
         <h2>Play as a Guest</h2>
         <!--Allows user to go straight to the game without login-->
         <input type="button" name="Guest" value="Play as Guest"
-            onclick="window.location='play_button.html' + document.location.search;">
+            onclick="window.location='./play_button.html' + document.location.search;">
 
     </div>
 
