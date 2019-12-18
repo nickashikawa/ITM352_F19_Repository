@@ -2,7 +2,7 @@ var fs = require('fs');
 var express = require('express');
 var app = express();
 var myParser = require("body-parser");
-const querystring = require('querystring');
+var querystring = require('querystring');
 
 app.use(myParser.urlencoded({ extended: true }));
 var filename = 'user_data.json';
@@ -21,14 +21,14 @@ if (fs.existsSync(filename)) {
 }
 
 
-app.post("login", function (request, response) {
+app.post("/login", function (request, response) {
     // Give a simple login form
     str = `
     <body>
     <style>
 html{
     text-align: center;
-    background-image:url("Tetris_Background_Image.jpeg"); /*Background Image*/
+    background-image:url("images/Tetris_Background_Image.jpeg"); /*Background Image*/
     
 }
 body{
@@ -53,11 +53,9 @@ body{
         <input type="text" name="username" id="username" size="40" placeholder="Enter Username" required><br />
         <input type="password" name="password" size="40" placeholder="Enter Password" onkeyup="" required><br />
         <input type="submit" value="Login" name="login"><br />
-        
+    
 </form>
-<script>
-login.action = "login" + document.location.search;
-</script>
+       
     </form>
     
     
@@ -84,7 +82,8 @@ app.post("/logUserin", function (request, response) {
             response.redirect('play_button.html');
             //Redirect them to play button here if they logged in correctly
         } else {
-            response.redirect('server.js');
+
+            response.redirect('./index.html');
         }
 
     }
@@ -92,41 +91,16 @@ app.post("/logUserin", function (request, response) {
 
 
 
-app.get("/registerUser", function (request, response) {
-    // Give a simple register form
-    str = `
-    <body>
-    <div>
-        <form method="POST" action="" name="Register">
-            <input type="text" name="fullname" size="40" pattern="[a-zA-Z]+[ ]+[a-zA-Z]+"
-                placeholder="Enter First & Last Name"><br />
-            <input type="text" name="username" size="40" pattern=".[a-z0-9]{3,10}" required
-                title="Minimum 4 Characters, Maximum 10 Characters, Numbers/Letters Only"
-                placeholder="Enter Username"><br />
-            <input type="email" name="email" size="40" placeholder="Enter Email"
-                pattern="[a-z0-9._]+@[a-z0-9]+\.[a-z]{3,}$" required title="Please enter valid email."><br />
-            <input type="password" id="password" name="password" size="40" pattern=".{8,}" required
-                title="8 Characters Minimum" placeholder="Enter Password"><br />
-            <input type="password" id="repeat_password" name="repeat_password" size="40" pattern=".{8,}" required
-                title="8 Characters Minimum" placeholder="Repeat Password"><br />
-            <input type="submit" value="Register" id="submit">
-        </form>
-    </div>
-</body>
-    `;
-    response.send(str);
-});
-
-
-
 app.post("/registerMember", function (request, response) {
+    querystring = request.body;
     console.log(querystring);
+
 
 
     var errors = []; //assume no errors at first,
 
     //name contains only letters 
-    if (/^[A-Za-z" "]+$/.test(request.body.name)) {
+    if (/^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$/.test(request.body.name)) {
     }
     else {
         errors.push('Invalid character, only use letters for name!')
@@ -141,17 +115,17 @@ app.post("/registerMember", function (request, response) {
 
     //checks to see if username already exists
 
-    var reguser = request.body.username.toLowerCase();
+    var reguser = querystring.username.toLowerCase();
     if (typeof users_reg_data[reguser] != 'undefined') {
         errors.push('Username taken')
     }
     //validating username 
     //Check letters and numbers only
 
-    if (/^[0-9a-zA-Z]+$/.test(request.body.username)) {
+    if (/^[0-9a-zA-Z" "]+$/.test(request.body.username)) {
     }
     else {
-        errors.push('Please only use letters and numbers for username')
+        errors.push('Please only use letters and numbers for username no spaaces between them!')
     }
     if ((request.body.username.length < 5 && request.body.username.length > 20)) {
         errors.push('username must be between 5 and 20 characters')
@@ -169,17 +143,18 @@ app.post("/registerMember", function (request, response) {
 
 
 
-    // if there are no errors, save the json data and send user to the invoice
 
-    if (errors.length == 0) {
-        console.log('none!');
-        request.query.username = reguser;
-        request.query.name = request.body.name;
+    if (errors == 0) {
+        users_reg_data[reguser] = {};
+        users_reg_data[reguser].name = querystring.username;
+        users_reg_data[reguser].password = querystring.password;
+        users_reg_data[reguser].email = querystring.email;
+        console.log(users_reg_data[reguser], "New User Updated");
+
+        fs.writeFileSync(filename, JSON.stringify(users_reg_data));
+
         response.redirect('./play_button.html?' + querystring.stringify(request.query))
 
-        user_data_JSON = fs.readFileSync(filename, 'utf-8');
-        user_data = JSON.parse(user_data_JSON);
-        fs.writeFileSync(filename, JSON.stringify(users_reg_data));
     }
     if (errors.length > 0) {
         console.log(errors)
@@ -190,13 +165,15 @@ app.post("/registerMember", function (request, response) {
         request.query.email = request.body.email;
 
         request.query.errors = errors.join(';');
-        response.redirect('./register.html?' + querystring.stringify(request.query)) //trying to add query from registration page and invoice back to register page on reload
+        response.redirect('./register.html?' + querystring.stringify(request.query))
     }
 
     //add errors to querystring
 
 }
+
 );
+
 
 app.use(express.static('./Public'));
 app.listen(8080, () => console.log(`listening on port 8080`));
