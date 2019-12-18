@@ -28,7 +28,7 @@ app.post("/login", function (request, response) {
     <style>
 html{
     text-align: center;
-    background-image:url("images/Tetris_Background_Image.jpeg"); /*Background Image*/
+    background-image:url("./Tetris_Background.png"); /*Background Image*/
     
 }
 body{
