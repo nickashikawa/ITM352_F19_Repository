@@ -4,34 +4,34 @@
   <title>Tetris</title>
   <style>
     body {
-      color: black;
-      font-family: sans-serif;
+      background-image: url('Tetris_Background.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      color: #fff;
+      font-family: 'Press Start 2P', cursive;
       font-size: 2em;
       text-align: center;
       overflow: hidden;
-
     }
-
     canvas {
-      border: solid .2em black;
+      border: solid .2em #fff;
       height: 80vh;
     }
-
-    html {
-      background-image: url("./Tetris_Background.png");
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
   </style>
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
   <!--figure out how to make it fit in page"-->
-  <div id="userInput">
-    <script>`${document.getElementById('userInput')}`</script>figure out user name</div>
-  <br>
+  <div id="uName">
+    <br>
+    <script>`${document.getElementById('username')}`</script>PLAYER</div>
   <div id="score"></div>
-  <canvas id="tetris" width="240" height="400">
+  <canvas id="tetris" width="240" height="400" />
   <script src="tetris.js"></script>
 
+
 </body>
+
+</html>

@@ -12,6 +12,7 @@ html{
     padding: 100px; /*centers login page*/
     image-resolution: 2000dpi;
     background-size: cover;
+    font-family: 'Press Start 2P', cursive;
     
 }
 body{
@@ -20,6 +21,7 @@ body{
     height:50%;
     margin: 100px auto;
     position: relative; /*Centering the log in*/
+    color: #282828;
     
     
 }
@@ -27,8 +29,8 @@ body{
   
  
     vertical-align:center;
-    background-color: #9be198;
-    opacity: 200%;
+    background-color: #FF00FF;
+    opacity: 90%;
     
 	
 }
@@ -45,21 +47,25 @@ body{
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Incorrect Username please try again!</title>
-   
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
    
 </head>
 
 
 <body>
     <div id= login>
-    <h1>Re-attempt login</h1> 
-    <p>Your Username was incorrect, please try again!</p> <!--Login for player 1-->
+        <br>
+        <br>
+    <h1>RE-ATTEMPT LOGIN</h1> 
+    <p>YOUR USERNAME WAS INCORRECT, PLEASE TRY AGAIN!</p> <!--Login for player 1-->
  
     <form name="login for player 1" method="POST" action="./logUserin">
         <div class="container">
-            <input type="text" name="username" id="username" size="40" placeholder="Enter Username" required><br />
-            <input type="password" name="password" id="password" size="40" placeholder="Enter Password" onkeyup="" required><br />
+            <input type="text" name="username" id="username" size="40" placeholder="Enter Username" required><br /><br>
+            <input type="password" name="password" id="password" size="40" placeholder="Enter Password" onkeyup="" required><br /><br>
             <input type="submit" value="Login" name="login"><br />
+            <br>
+            <br>
         </div>
     </form>
     <script>
