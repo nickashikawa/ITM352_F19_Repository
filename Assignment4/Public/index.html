@@ -2,124 +2,134 @@
 <html lang="en">
 
 <head>
-  <style>
-        html{
-        text-align: center;
-        background-image:url("./Tetris_Background.png"); /*Background Image*/
-        background-repeat: no-repeat;
-        padding: 100px; /*centers login page*/
-        background-size: cover;
-        font-family: 'Press Start 2P', cursive;
-        }
-        body{
-        display:table;
-        width:50%;
-        height:50%;
-        margin: 100px auto;
-        position: relative; /*Centering the log in*/
-
-
-
-        }
-        h1{
-        color: #282828;
-        opacity: 90%;
-        padding: 10px; /*centers login page*/
-        }
-        body{
-        color: #282828;
-        opacity: 90%;
-        padding: 10px; /*centers login page*/
-        }
-        h2{
-        color: #282828;
-        opacity: 90%;
-        padding: 15px; /*centers login page*/
+    <style>
+        html {
+            text-align: center;
+            background-image: url("./Tetris_Background.png");
+            /*Background Image*/
+            background-repeat: no-repeat;
+            padding: 100px;
+            /*centers login page*/
+            background-size: cover;
+            font-family: 'Press Start 2P', cursive;
         }
 
-        #login{
+        body {
+            display: table;
+            width: 50%;
+            height: 50%;
+            margin: 100px auto;
+            position: relative;
+            /*Centering the log in*/
 
-
-        vertical-align:center;
-        background-color: #FF00FF;
 
 
         }
-        </style>
-        <script>
-            let params = (new URL(document.location)).searchParams;
-            window.onload = function () {
-                if (params.has('LogError')) {
-                    alert('Invalid Username or Passowrd');
-                }
+
+        h1 {
+            color: #282828;
+            opacity: 90%;
+            padding: 10px;
+            /*centers login page*/
+        }
+
+        body {
+            color: #282828;
+            opacity: 90%;
+            padding: 10px;
+            /*centers login page*/
+        }
+
+        h2 {
+            color: #282828;
+            opacity: 90%;
+            padding: 15px;
+            /*centers login page*/
+        }
+
+        #login {
+
+
+            vertical-align: center;
+            background-color: #FF00FF;
+
+
+        }
+    </style>
+    <script>
+        let params = (new URL(document.location)).searchParams;
+        window.onload = function () {
+            if (params.has('LogError')) {
+                alert('Invalid Username or Passowrd');
             }
-        </script>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Login Page</title>
-        <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
-        <SCRIPT LANGUAGE="JavaScript">
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login Page</title>
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <SCRIPT LANGUAGE="JavaScript">
 
 
 
-            function GetCookie (name) {
+        function GetCookie(name) {
             var arg = name + "=";
             var alen = arg.length;
             var clen = document.cookie.length;
             var i = 0;
             while (i < clen) {
-            var j = i + alen;
-            if (document.cookie.substring(i, j) == arg)
-            return getCookieVal (j);
-            i = document.cookie.indexOf(" ", i) + 1;
-            if (i == 0) break;
+                var j = i + alen;
+                if (document.cookie.substring(i, j) == arg)
+                    return getCookieVal(j);
+                i = document.cookie.indexOf(" ", i) + 1;
+                if (i == 0) break;
             }
             return null;
-            }
-            function SetCookie (name, value) {
+        }
+        function SetCookie(name, value) {
             var argv = SetCookie.arguments;
             var argc = SetCookie.arguments.length;
             var expires = (argc > 2) ? argv[2] : null;
             var path = (argc > 3) ? argv[3] : null;
             var domain = (argc > 4) ? argv[4] : null;
             var secure = (argc > 5) ? argv[5] : false;
-            document.cookie = name + "=" + escape (value) +
-            ((expires == null) ? "" : ("; expires=" + expires.toGMTString())) +
-            ((path == null) ? "" : ("; path=" + path)) +
-            ((domain == null) ? "" : ("; domain=" + domain)) +
-            ((secure == true) ? "; secure" : "");
-            }
-            function DeleteCookie (name) {
+            document.cookie = name + "=" + escape(value) +
+                ((expires == null) ? "" : ("; expires=" + expires.toGMTString())) +
+                ((path == null) ? "" : ("; path=" + path)) +
+                ((domain == null) ? "" : ("; domain=" + domain)) +
+                ((secure == true) ? "; secure" : "");
+        }
+        function DeleteCookie(name) {
             var exp = new Date();
-            exp.setTime (exp.getTime() - 1);
-            var cval = GetCookie (name);
+            exp.setTime(exp.getTime() - 1);
+            var cval = GetCookie(name);
             document.cookie = name + "=" + cval + "; expires=" + exp.toGMTString();
-            }
-            var expDays = 30;
-            var exp = new Date();
-            exp.setTime(exp.getTime() + (expDays*24*60*60*1000));
-            function amt(){
+        }
+        var expDays = 30;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + (expDays * 24 * 60 * 60 * 1000));
+        function amt() {
             var count = GetCookie('count')
-            if(count == null) {
-            SetCookie('count','1')
-            return 1
+            if (count == null) {
+                SetCookie('count', '1')
+                return 1
             }
             else {
-            var newcount = parseInt(count) + 1;
-            DeleteCookie('count')
-            SetCookie('count',newcount,exp)
-            return count
-               }
+                var newcount = parseInt(count) + 1;
+                DeleteCookie('count')
+                SetCookie('count', newcount, exp)
+                return count
             }
-            function getCookieVal(offset) {
-            var endstr = document.cookie.indexOf (";", offset);
+        }
+        function getCookieVal(offset) {
+            var endstr = document.cookie.indexOf(";", offset);
             if (endstr == -1)
-            endstr = document.cookie.length;
+                endstr = document.cookie.length;
             return unescape(document.cookie.substring(offset, endstr));
-            }
+        }
             // End -->
-            </SCRIPT>
+    </SCRIPT>
 </head>
 
 
@@ -152,15 +162,18 @@
         <!--Allows user to go straight to the game without login-->
         <input type="button" name="Guest" value="Play as Guest"
             onclick="window.location='./play_button.html' + document.location.search;">
+            <br>
+            <br>
+            <SCRIPT LANGUAGE="JavaScript">
+
+                document.write("You've been here <b>" + amt() + "</b> times.")
+                // End -->
+            </SCRIPT>
         <br>
         <br>
 
     </div>
-    <SCRIPT LANGUAGE="JavaScript">
 
-        document.write("You've been here <b>" + amt() + "</b> times.")
-        // End -->
-        </SCRIPT>
 
 </body>
 
