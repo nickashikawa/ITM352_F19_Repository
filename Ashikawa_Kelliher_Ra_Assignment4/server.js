@@ -1,11 +1,11 @@
 //A working server using express
 //Used similar server base from Kelliher and Ashikawas Assignment2 Lab14
 
-var fs = require('fs');
-var express = require('express');// requiring the server to use express
+var fs = require('./public/node_modules/fs');
+var express = require('./public/node_modules/express');// requiring the server to use express
 var app = express();//Run the express function and start express
-var myParser = require("body-parser");
-var querystring = require('querystring');
+var myParser = require("./public/node_modules/body-parser");
+var querystring = require('./public/node_modules/querystring');
 var filename = 'user_data.json';//Pulling the user data from JSON file to ceate a working login and registration
 
 app.use(myParser.urlencoded({ extended: true }));// to allow us to use request.body
