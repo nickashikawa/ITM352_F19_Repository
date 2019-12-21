@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use(myParser.urlencoded({ extended: true }));
 
 
-fs = require('fs');
+fs = require('../Ashikawa_Kelliher_Ra_Assignment4/node_modules/fs');
 var filename = 'user_data.json';
 //Better to use variable because its more flexible for when things change
 
